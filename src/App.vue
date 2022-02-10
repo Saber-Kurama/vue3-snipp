@@ -1,3 +1,10 @@
+<!--
+ * @Author: saber
+ * @Date: 2022-02-10 15:41:57
+ * @LastEditTime: 2022-02-10 19:12:29
+ * @LastEditors: saber
+ * @Description: 
+-->
 <script setup lang="ts">
 import { RouterLink, RouterView } from 'vue-router'
 import HelloWorld from '@/components/HelloWorld.vue'
@@ -5,11 +12,12 @@ import HelloWorld from '@/components/HelloWorld.vue'
 
 <template>
   <header>
+    <div><i-custom-file-code style="width: 60px; height: 60px" /></div>
+    <span><i-custom-file-code style="width: 60px; height: 60px" /> </span>
     <img alt="Vue logo" class="logo" src="@/assets/logo.svg" width="125" height="125" />
 
     <div class="wrapper">
       <HelloWorld msg="You did it!" />
-
       <nav>
         <RouterLink to="/">Home</RouterLink>
         <RouterLink to="/about">About</RouterLink>
