@@ -1,7 +1,7 @@
 <!--
  * @Author: saber
  * @Date: 2022-02-11 17:10:32
- * @LastEditTime: 2022-02-11 18:50:57
+ * @LastEditTime: 2022-02-11 18:54:10
  * @LastEditors: saber
  * @Description: 
 -->
@@ -32,5 +32,6 @@ main {
   grid-template-columns: 50px auto 1fr;
   position: relative;
   background-color: var(--color-secondary-light);
+  position: relative;
 }
 </style>

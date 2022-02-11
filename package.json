@@ -11,6 +11,7 @@
   "dependencies": {
     "pinia": "^2.0.11",
     "vue": "^3.2.29",
+    "vue-feather-icons": "^5.1.0",
     "vue-router": "^4.0.12"
   },
   "devDependencies": {

@@ -20,12 +20,14 @@ specifiers:
   unplugin-vue-components: ^0.17.18
   vite: ^2.7.13
   vue: ^3.2.29
+  vue-feather-icons: ^5.1.0
   vue-router: ^4.0.12
   vue-tsc: ^0.31.1
 
 dependencies:
   pinia: 2.0.11_typescript@4.5.5+vue@3.2.30
   vue: 3.2.30
+  vue-feather-icons: 5.1.0
   vue-router: 4.0.12_vue@3.2.30
 
 devDependencies:
@@ -929,6 +931,10 @@ packages:
   /assert-never/1.2.1:
     resolution: {integrity: sha512-TaTivMB6pYI1kXwrFlEhLeGfOqoDNdTxjCdwRfFFkEA30Eu+k48W34nlok2EYWJfFFzqaEmichdNM7th6M5HNw==}
     dev: true
+
+  /babel-helper-vue-jsx-merge-props/2.0.3:
+    resolution: {integrity: sha512-gsLiKK7Qrb7zYJNgiXKpXblxbV5ffSwR0f5whkPAaBAR4fhi6bwRZxX9wBlIc5M/v8CCkXUbXZL4N/nSE97cqg==}
+    dev: false
 
   /babel-walk/3.0.0-canary-5:
     resolution: {integrity: sha512-GAwkz0AihzY5bkwIY5QDR+LvsRQgB/B+1foMPvi0FZPMl5fjD7ICiznUiBdLYMH1QYe6vqu4gWYytZOccLouFw==}
@@ -2763,6 +2769,12 @@ packages:
     transitivePeerDependencies:
       - supports-color
     dev: true
+
+  /vue-feather-icons/5.1.0:
+    resolution: {integrity: sha512-ZyM2yFGmL9DYLZYHm63KV1zCQOj8czC2LzDSkxoIp9o6zMAOY4yv1FkxbX+XNUwcH3RRrAuvf25Ij7CnUUsQVA==}
+    dependencies:
+      babel-helper-vue-jsx-merge-props: 2.0.3
+    dev: false
 
   /vue-router/4.0.12_vue@3.2.30:
     resolution: {integrity: sha512-CPXvfqe+mZLB1kBWssssTiWg4EQERyqJZes7USiqfW9B5N2x+nHlnsM1D3b5CaJ6qgCvMmYJnz+G0iWjNCvXrg==}
