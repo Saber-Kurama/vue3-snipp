@@ -1,7 +1,7 @@
 <!--
  * @Author: saber
  * @Date: 2022-02-10 15:41:57
- * @LastEditTime: 2022-02-11 17:06:54
+ * @LastEditTime: 2022-02-11 17:11:23
  * @LastEditors: saber
  * @Description: 
 -->
@@ -21,5 +21,4 @@ const getActiveTheme = 'saber';
   width: 100vw;
   height: 100wh;
   overflow: hidden;
-}
 </style>
