@@ -1,7 +1,7 @@
 <!--
  * @Author: saber
  * @Date: 2022-02-10 15:41:57
- * @LastEditTime: 2022-02-11 17:11:23
+ * @LastEditTime: 2022-02-11 18:45:31
  * @LastEditors: saber
  * @Description: 
 -->
@@ -11,7 +11,9 @@ const getActiveTheme = 'saber';
 </script>
 
 <template>
-  <div :class="['root', getActiveTheme]"></div>
+  <div :class="['root', getActiveTheme]">
+    <router-view></router-view>
+  </div>
 </template>
 
 <style lang="scss" scoped>
@@ -21,4 +23,5 @@ const getActiveTheme = 'saber';
   width: 100vw;
   height: 100wh;
   overflow: hidden;
+}
 </style>
