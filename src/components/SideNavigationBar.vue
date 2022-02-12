@@ -6,8 +6,7 @@
  * @Description: 
 -->
 <script setup lang="ts">
-// eslint-disable-next-line @typescript-eslint/ban-ts-comment
-// @ts-ignore
+
 import {
   FileTextIcon,
   SearchIcon,
@@ -15,11 +14,20 @@ import {
   SettingsIcon,
   GithubIcon,
   CommandIcon,
+  // @ts-ignore
 } from 'vue-feather-icons';
 </script>
 <template>
-  <div>
-    <FileTextIcon />
+  <div class="side-navigation-bar">
+    <FileTextIcon size="10px"/>
   </div>
 </template>
-<style></style>
+<style lang="scss" scoped>
+.side-navigation-bar {
+  background: var(--color-secondary);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  border-right: 1px solid var(--border-color);
+}
+</style>
