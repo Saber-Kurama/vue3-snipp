@@ -15,7 +15,6 @@ import SideNavigationBar from "@/components/SideNavigationBar.vue";
       <SideNavigationBar />
       <div>============1</div>
       <div>2-----------000000000</div>
-      <div>33333</div>
     </div>
   </main>
 </template>
