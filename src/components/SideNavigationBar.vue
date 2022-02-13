@@ -65,9 +65,9 @@ const icons: {
         ]"
         :key="menuItem.id"
         @click="
-          uiState.setActivePanelId({
-            id: uiState.activePanelId === menuItem.id ? null : menuItem.id,
-          })
+          uiState.activePanelId === menuItem.id
+            ? null
+            : uiState.setActivePanelId(menuItem)
         "
       >
         <component :is="icons[menuItem.icon]" size="20px"></component>

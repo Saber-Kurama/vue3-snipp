@@ -28,7 +28,7 @@ export const useUiStore = defineStore('ui', {
     },
   },
   actions: {
-    setActivePanelId({ id }: typeof PANELS.explorer | { id: null }) {
+    setActivePanelId({ id }: typeof PANELS.explorer) {
       if (id) {
         this.$state.activePanelId = id;
       }
