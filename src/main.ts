@@ -7,7 +7,8 @@
  */
 import { createApp } from 'vue';
 import { createPinia } from 'pinia';
-
+// todo: 后续自己封装一个 vue3 simplebar
+import 'simplebar/dist/simplebar.min.css';
 import './styles/global.scss';
 import App from './App.vue';
 import router from './router';

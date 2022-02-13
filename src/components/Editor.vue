@@ -3,11 +3,11 @@ import { EDITORS, useEditorStore } from '@/stores/editor';
 import { computed } from 'vue';
 import TopBar from './TopBar.vue';
 
-const useEditorState = useEditorStore();
+const editorState = useEditorStore();
 
 const getEditorModel = computed(() => {
   // todo: 如果只有 secondary 的情况呢？
-  if (useEditorState.openFiles[EDITORS.secondary]?.length > 0) {
+  if (editorState.openFiles[EDITORS.secondary]?.length > 0) {
     return 'multiple';
   } else {
     return 'single';
@@ -17,7 +17,7 @@ const getEditorModel = computed(() => {
 <template>
   <div :class="['editor-area', getEditorModel]">
     <div id="primary-editor" class="codemirror-instances">
-        <TopBar />
+        <TopBar :openFiles="editorState.openFiles[EDITORS.primary]"/>
     </div>
   </div>
 </template>
