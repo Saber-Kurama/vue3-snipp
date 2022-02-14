@@ -5,14 +5,17 @@
  * @LastEditors: saber
  * @Description: 
 -->
-<script setup lang="ts"></script>
+<script setup lang="ts">
+import SideNavigationBar from "@/components/SideNavigationBar.vue";
+import Editor from "@/components/Editor.vue"; 
+</script>
 
 <template>
   <main>
     <div id="main-layout">
+      <SideNavigationBar />
       <div>============1</div>
-      <div>2-----------000000000</div>
-      <div>33333</div>
+      <Editor />
     </div>
   </main>
 </template>

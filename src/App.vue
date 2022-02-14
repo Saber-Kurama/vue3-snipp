@@ -21,7 +21,7 @@ const getActiveTheme = 'saber';
   display: flex;
   flex-direction: column;
   width: 100vw;
-  height: 100wh;
+  height: 100vh;
   overflow: hidden;
 }
 </style>

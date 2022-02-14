@@ -1,6 +1,7 @@
 lockfileVersion: 5.3
 
 specifiers:
+  '@icon-park/vue-next': ^1.3.6
   '@rushstack/eslint-patch': ^1.1.0
   '@types/node': ^16.11.22
   '@vitejs/plugin-vue': ^2.1.0
@@ -15,6 +16,8 @@ specifiers:
   prettier: ^2.5.1
   sass: ^1.49.7
   sass-loader: ^12.4.0
+  simplebar: ^5.3.6
+  simplebar-vue3: ^0.1.5
   typescript: ~4.5.5
   unplugin-icons: ^0.13.1
   unplugin-vue-components: ^0.17.18
@@ -25,7 +28,10 @@ specifiers:
   vue-tsc: ^0.31.1
 
 dependencies:
+  '@icon-park/vue-next': 1.3.6_vue@3.2.30
   pinia: 2.0.11_typescript@4.5.5+vue@3.2.30
+  simplebar: 5.3.6
+  simplebar-vue3: 0.1.5_simplebar@5.3.6+vue@3.2.30
   vue: 3.2.30
   vue-feather-icons: 5.1.0
   vue-router: 4.0.12_vue@3.2.30
@@ -424,6 +430,15 @@ packages:
     resolution: {integrity: sha512-ZnQMnLV4e7hDlUvw8H+U8ASL02SS2Gn6+9Ac3wGGLIe7+je2AeAOxPY+izIPJDfFDb7eDjev0Us8MO1iFRN8hA==}
     dev: true
 
+  /@icon-park/vue-next/1.3.6_vue@3.2.30:
+    resolution: {integrity: sha512-AZaCcjRPU9vTNVfcrG03CYJM+uv0SXx5lC4njanlRorFo+TV/x0ZTYGYGpTR/l6ek6QmFu9THmrgqKl7i/8yHg==}
+    engines: {node: '>= 8.0.0', npm: '>= 5.0.0'}
+    peerDependencies:
+      vue: 3.x
+    dependencies:
+      vue: 3.2.30
+    dev: false
+
   /@iconify/types/1.0.12:
     resolution: {integrity: sha512-6er6wSGF3hgc1JEZqiGpg21CTCjHBYOUwqLmb2Idzkjiw6ogalGP0ZMLVutCzah+0WB4yP+Zd2oVPN8jvJ+Ftg==}
     dev: true
@@ -456,6 +471,10 @@ packages:
       '@jridgewell/resolve-uri': 3.0.4
       '@jridgewell/sourcemap-codec': 1.4.10
     dev: true
+
+  /@juggle/resize-observer/3.3.1:
+    resolution: {integrity: sha512-zMM9Ds+SawiUkakS7y94Ymqx+S0ORzpG3frZirN3l+UlXUmSUR7hF4wxCVqW+ei94JzV5kt0uXBcoOEAuiydrw==}
+    dev: false
 
   /@nodelib/fs.scandir/2.1.5:
     resolution: {integrity: sha512-vq24Bq3ym5HEQm2NKCr3yXDwjc7vTsEThRDnkp2DK9p1uqLR+DHurm/NOTo0KG7HYHU7eppKZj3MyqYuMBf62g==}
@@ -995,6 +1014,10 @@ packages:
     engines: {node: '>=10'}
     dev: true
 
+  /can-use-dom/0.1.0:
+    resolution: {integrity: sha1-IsxKNKCrxDlQ9CxkEQJKP2NmtFo=}
+    dev: false
+
   /caniuse-lite/1.0.30001310:
     resolution: {integrity: sha512-cb9xTV8k9HTIUA3GnPUJCk0meUnrHL5gy5QePfDjxHyNBcnzPzrHFv5GqfP7ue5b1ZyzZL0RJboD6hQlPXjhjg==}
     dev: true
@@ -1074,6 +1097,11 @@ packages:
     dependencies:
       safe-buffer: 5.1.2
     dev: true
+
+  /core-js/3.21.0:
+    resolution: {integrity: sha512-YUdI3fFu4TF/2WykQ2xzSiTQdldLB4KVuL9WeAy5XONZYt5Cun/fpQvctoKbCgvPhmzADeesTk/j2Rdx77AcKQ==}
+    requiresBuild: true
+    dev: false
 
   /cross-env/7.0.3:
     resolution: {integrity: sha512-+/HKd6EgcQCJGh2PSjZuUitQBQynKor4wrFbRg4DtAgS1aWO+gU52xpH7M9ScGgXSYmAVS9bIJ8EzuaGw0oNAw==}
@@ -1950,9 +1978,21 @@ packages:
       p-locate: 5.0.0
     dev: true
 
+  /lodash.debounce/4.0.8:
+    resolution: {integrity: sha1-gteb/zCmfEAF/9XiUVMArZyk168=}
+    dev: false
+
+  /lodash.memoize/4.1.2:
+    resolution: {integrity: sha1-vMbEmkKihA7Zl/Mj6tpezRguC/4=}
+    dev: false
+
   /lodash.merge/4.6.2:
     resolution: {integrity: sha512-0KpjqXRVvrYyCsX1swR/XTK0va6VQkQM6MNo7PqW77ByjAhoARA8EfrP1N4+KlKj8YS0ZUCtRT/YUuhyYDujIQ==}
     dev: true
+
+  /lodash.throttle/4.1.1:
+    resolution: {integrity: sha1-wj6RtxAkKscMN/HhzaknTMOb8vQ=}
+    dev: false
 
   /lodash/4.17.21:
     resolution: {integrity: sha512-v2kDEe57lecTulaDIuNTPy3Ry4gLGJ6Z1O3vE1krgXZNrsQ+LFTGHVxVjcXPs17LhbZVGedAJv8XZ1tvj5FvSg==}
@@ -2383,6 +2423,27 @@ packages:
   /signal-exit/3.0.7:
     resolution: {integrity: sha512-wnD2ZE+l+SPC/uoS0vXeE9L1+0wuaMqKlfz9AMUo38JsyLSBWSFcHR1Rri62LZc12vLr1gb3jl7iwQhgwpAbGQ==}
     dev: true
+
+  /simplebar-vue3/0.1.5_simplebar@5.3.6+vue@3.2.30:
+    resolution: {integrity: sha512-s0i42kXQwjfQfBBrD1pWVzicTkZ+oo2rg3KCk+eMOCWaOKywFXxelATk7mk7j6d3LCpBoT1g9oWl+wOljwgM1g==}
+    peerDependencies:
+      simplebar: 5.3.6
+      vue: 3.2.0
+    dependencies:
+      simplebar: 5.3.6
+      vue: 3.2.30
+    dev: false
+
+  /simplebar/5.3.6:
+    resolution: {integrity: sha512-FJUMbV+hNDd/m+1/fvD41TXKd5mSdlI5zgBygkaQIV3SffNbcLhSbJT6ufTs8ZNRLJ6i+qc/KCFMqWmvlGWMhA==}
+    dependencies:
+      '@juggle/resize-observer': 3.3.1
+      can-use-dom: 0.1.0
+      core-js: 3.21.0
+      lodash.debounce: 4.0.8
+      lodash.memoize: 4.1.2
+      lodash.throttle: 4.1.1
+    dev: false
 
   /slash/3.0.0:
     resolution: {integrity: sha512-g9Q1haeby36OSStwb4ntCGGGaKsaVSjQ68fBxoQcutl5fS1vuY18H3wSt3jFyFtrkx+Kz0V1G85A4MyAdDMi2Q==}
