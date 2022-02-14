@@ -4,6 +4,7 @@
 
 declare module 'vue' {
   export interface GlobalComponents {
+    CodeEditor: typeof import('./src/components/Editors/CodeEditor/index.vue')['default']
     Editor: typeof import('./src/components/Editor.vue')['default']
     HelloWorld: typeof import('./src/components/HelloWorld.vue')['default']
     IconCommunity: typeof import('./src/components/icons/IconCommunity.vue')['default']
@@ -11,7 +12,10 @@ declare module 'vue' {
     IconEcosystem: typeof import('./src/components/icons/IconEcosystem.vue')['default']
     IconSupport: typeof import('./src/components/icons/IconSupport.vue')['default']
     IconTooling: typeof import('./src/components/icons/IconTooling.vue')['default']
+    LoadingScreen: typeof import('./src/components/LoadingScreen.vue')['default']
     Logo: typeof import('./src/components/shared/Logo.vue')['default']
+    LogoSkeleton: typeof import('./src/components/shared/LogoSkeleton.vue')['default']
+    ProgressView: typeof import('./src/components/shared/ProgressView.vue')['default']
     SideNavigationBar: typeof import('./src/components/SideNavigationBar.vue')['default']
     TheWelcome: typeof import('./src/components/TheWelcome.vue')['default']
     TopBar: typeof import('./src/components/TopBar.vue')['default']
