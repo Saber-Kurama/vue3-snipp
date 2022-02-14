@@ -14,7 +14,7 @@ import Editor from "@/components/Editor.vue";
   <main>
     <div id="main-layout">
       <SideNavigationBar />
-      <div>============1</div>
+      <div class="explorer-panel">============1</div>
       <Editor />
     </div>
   </main>
@@ -36,5 +36,11 @@ main {
   position: relative;
   background-color: var(--color-secondary-light);
   position: relative;
+
+  .explorer-panel{
+    width: 270px;
+    height: 100%;
+    overflow: hidden;
+  }
 }
 </style>
