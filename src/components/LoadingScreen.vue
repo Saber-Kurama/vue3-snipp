@@ -1,7 +1,7 @@
 <!--
  * @Author: saber
  * @Date: 2022-02-14 11:39:22
- * @LastEditTime: 2022-02-14 13:42:44
+ * @LastEditTime: 2022-02-14 13:56:18
  * @LastEditors: saber
  * @Description: 
 -->
@@ -18,7 +18,7 @@ import ProgressView from './shared/ProgressView.vue';
     <ProgressView />
   </div>
 </template>
-<style lang="scss">
+<style lang="scss" scoped>
 .loading-screen {
   display: flex;
   width: 100%;
