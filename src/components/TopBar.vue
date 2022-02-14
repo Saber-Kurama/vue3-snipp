@@ -1,9 +1,18 @@
+<!--
+ * @Author: saber
+ * @Date: 2022-02-14 10:13:35
+ * @LastEditTime: 2022-02-14 10:54:36
+ * @LastEditors: saber
+ * @Description: b
+-->
 <script lang="ts" setup>
 import { SimpleBar } from 'simplebar-vue3';
 import { ref } from 'vue';
+import { useEditorStore } from '@/stores/editor';
 import type { FileType } from '@/stores/editor';
 import { Close } from '@icon-park/vue-next';
 
+const editorState = useEditorStore();
 // todo 怎么解决这个错误呢
 const SimpleBar1: any = SimpleBar;
 const props = defineProps({
@@ -12,15 +21,35 @@ const props = defineProps({
     default: () => [],
     // required: true
   },
+  activeFile: {
+    type: Object as () => FileType,
+    default: () => ({}),
+  },
+  isActive: Boolean,
 });
+
+const closeFile = ({ id }: { id: string }) => {
+  editorState.closeFile();
+};
 </script>
 <template>
   <div>
     <SimpleBar1 class="topbar">
       <ul class="file-tabs">
-        <li v-for="file in props.openFiles" :key="file.id">
+        <li
+          v-for="file in props.openFiles"
+          :key="file.id"
+          :class="[
+            { active: file.id === props.activeFile?.id && props.isActive },
+            { inActive: file.id === props.activeFile?.id && !props.isActive },
+          ]"
+        >
           <span>{{ file.name }}</span>
-          <Close size="14px" class="icon"></Close>
+          <Close
+            size="14px"
+            class="icon"
+            @click.stop="closeFile({ id: file.id })"
+          ></Close>
         </li>
       </ul>
     </SimpleBar1>
@@ -81,7 +110,15 @@ const props = defineProps({
         opacity: 1;
         cursor: pointer;
       }
+      &.active {
+        color: var(--font-color);
+        opacity: 1;
+        border-bottom: 2px solid var(--color-primary);
+      }
 
+      &.inActive {
+        border-bottom: 2px solid var(--font-color);
+      }
     }
   }
 }

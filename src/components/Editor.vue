@@ -1,5 +1,13 @@
+<!--
+ * @Author: saber
+ * @Date: 2022-02-14 10:13:35
+ * @LastEditTime: 2022-02-14 10:47:20
+ * @LastEditors: saber
+ * @Description: 
+-->
 <script setup lang="ts">
 import { EDITORS, useEditorStore } from '@/stores/editor';
+import type  { FileType } from '@/stores/editor';
 import { computed } from 'vue';
 import TopBar from './TopBar.vue';
 
@@ -13,11 +21,16 @@ const getEditorModel = computed(() => {
     return 'single';
   }
 });
+const activePrimaryFile = editorState.activeFiles[EDITORS.primary] as FileType;
 </script>
 <template>
   <div :class="['editor-area', getEditorModel]">
     <div id="primary-editor" class="codemirror-instances">
-        <TopBar :openFiles="editorState.openFiles[EDITORS.primary]"/>
+      <TopBar
+        :openFiles="editorState.openFiles[EDITORS.primary]"
+        :activeFile="activePrimaryFile"
+        :isActive="true"
+      />
     </div>
   </div>
 </template>
