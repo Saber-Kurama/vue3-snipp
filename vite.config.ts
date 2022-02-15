@@ -1,7 +1,7 @@
 /*
  * @Author: saber
  * @Date: 2022-02-10 15:41:57
- * @LastEditTime: 2022-02-11 17:01:45
+ * @LastEditTime: 2022-02-15 15:48:25
  * @LastEditors: saber
  * @Description:
  */
@@ -18,6 +18,9 @@ import Components from 'unplugin-vue-components/vite';
 
 // https://vitejs.dev/config/
 export default defineConfig({
+  server: {
+    host: '0.0.0.0',
+  },
   plugins: [
     vue(),
     vueJsx(),

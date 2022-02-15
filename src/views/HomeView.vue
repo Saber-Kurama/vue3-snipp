@@ -1,20 +1,23 @@
 <!--
  * @Author: saber
  * @Date: 2022-02-11 17:10:32
- * @LastEditTime: 2022-02-11 18:54:10
+ * @LastEditTime: 2022-02-15 10:06:43
  * @LastEditors: saber
  * @Description: 
 -->
 <script setup lang="ts">
 import SideNavigationBar from "@/components/SideNavigationBar.vue";
-import Editor from "@/components/Editor.vue"; 
+import Editor from "@/components/Editor.vue";
+import FileExplorer from "@/components/FileExplorer.vue";
 </script>
 
 <template>
   <main>
     <div id="main-layout">
       <SideNavigationBar />
-      <div class="explorer-panel">============1</div>
+      <div class="explorer-panel">
+        <FileExplorer />
+      </div>
       <Editor />
     </div>
   </main>
