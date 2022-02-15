@@ -5,10 +5,20 @@
  * @LastEditors: saber
  * @Description: 
 -->
-<script setup lang="ts"></script>
+<script setup lang="ts">
+import { FileCode } from '@icon-park/vue-next';
+import { ref } from 'vue';
+const filename = ref('saber');
+const readonly = ref(true);
+</script>
 <template>
   <div :class="['file-item']">
-    <div class="clickable-area">文件</div>
+    <div class="clickable-area">
+      <FileCode class="icon" size="20px"></FileCode>
+      <form>
+          <input type="text" v-model="filename" :readonly="readonly" size="2" />
+        </form>
+    </div>
   </div>
 </template>
 <style lang="scss" scoped>
@@ -34,6 +44,26 @@
     flex: 1;
     display: flex;
     flex-direction: column;
+  }
+
+   input {
+    border: 0;
+    padding: 6px 8px;
+    border-radius: 2px;
+    color: var(--font-color);
+    border: 2px solid transparent;
+    outline: none;
+    transition: 0.2s all ease-in-out;
+    background: transparent;
+    min-width: 0;
+
+    &[readonly] {
+      pointer-events: none;
+    }
+
+    &:focus {
+      border-bottom: 2px solid var(--color-primary);
+    }
   }
 }
 </style>
