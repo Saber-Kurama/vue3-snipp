@@ -1,7 +1,7 @@
 <!--
  * @Author: saber
  * @Date: 2022-02-15 10:18:58
- * @LastEditTime: 2022-02-15 14:52:00
+ * @LastEditTime: 2022-02-18 19:35:27
  * @LastEditors: saber
  * @Description: 
 -->
@@ -28,6 +28,7 @@ const components = {
       v-for="file in props.files"
       :key="file.id"
       :is="components[file.type]"
+      :file="file"
     ></component>
   </div>
 </template>

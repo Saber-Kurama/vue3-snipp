@@ -1,17 +1,24 @@
 <!--
  * @Author: saber
  * @Date: 2022-02-15 14:40:54
- * @LastEditTime: 2022-02-15 15:27:07
+ * @LastEditTime: 2022-02-18 19:33:33
  * @LastEditors: saber
  * @Description: 
 -->
 <script setup lang="ts">
 import { FolderClose, FolderOpen, MoreOne } from '@icon-park/vue-next';
-import { ref } from 'vue';
-const filename = ref('saber');
+import { onMounted, ref, type PropType } from 'vue';
+
+const props = defineProps({
+  file: Object as PropType<{ name: string }>,
+});
+const filename = ref(props.file?.name || '');
 const readonly = ref(true);
 const showChildren = ref(false);
 const showContextMenu = ref(false);
+onMounted(() => {
+  filename.value = props.file?.name || '???';
+});
 </script>
 <template>
   <div class="directory-wrapper">
