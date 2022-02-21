@@ -1,7 +1,14 @@
+<!--
+ * @Author: saber
+ * @Date: 2022-02-14 10:13:35
+ * @LastEditTime: 2022-02-21 14:56:33
+ * @LastEditors: saber
+ * @Description: 
+-->
 <template>
   <svg
-    :width="size"
-    :height="size"
+    :width="props.size"
+    :height="props.size"
     viewBox="0 0 1000 1000"
     fill="none"
     xmlns="http://www.w3.org/2000/svg"
