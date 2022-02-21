@@ -1,7 +1,7 @@
 <!--
  * @Author: saber
  * @Date: 2022-02-15 14:40:54
- * @LastEditTime: 2022-02-21 14:17:42
+ * @LastEditTime: 2022-02-21 14:26:01
  * @LastEditors: saber
  * @Description: 
 -->
@@ -33,15 +33,34 @@ onMounted(() => {
 const toggleShowChildren = () => {
   showChildren.value = !showChildren.value;
 };
+
+const changeFileName = () => {
+  if (filename.value) {
+    // 重命名
+    readonly.value = true;
+  } else {
+    // 删除目录
+  }
+};
 </script>
 <template>
   <div class="directory-wrapper">
     <div :class="['file-item']">
-      <div class="clickable-area" @click="toggleShowChildren">
+      <div
+        class="clickable-area"
+        @click="toggleShowChildren"
+        @dblclick="readonly = !readonly"
+      >
         <FolderOpen v-if="showChildren" class="icon" size="20px"></FolderOpen>
         <FolderClose v-else class="icon" size="20px"></FolderClose>
         <form>
-          <input type="text" v-model="filename" :readonly="readonly" size="2" />
+          <input
+            type="text"
+            v-model="filename"
+            :readonly="readonly"
+            size="2"
+            @blur="changeFileName"
+          />
         </form>
       </div>
       <div class="context-menu">
