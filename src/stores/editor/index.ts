@@ -1,11 +1,12 @@
 /*
  * @Author: saber
  * @Date: 2022-02-14 10:13:35
- * @LastEditTime: 2022-02-15 14:31:33
+ * @LastEditTime: 2022-02-21 11:47:57
  * @LastEditors: saber
  * @Description:
  */
 import { defineStore } from 'pinia';
+import { useFileStore } from '../files';
 
 // 编辑面板 支持 两个
 export const EDITORS = {
@@ -31,54 +32,46 @@ export const useEditorStore = defineStore('editor', {
       [EDITORS.secondary]: [] as FileType[],
     },
     activeFiles: {
-      // TODO: 这里的数据最好是用 id 存储
-      [EDITORS.primary]: { id: '11', name: 'kafa' } as FileType,
+      [EDITORS.primary]: '11',
       [EDITORS.secondary]: null,
     } as {
-      [x: string]: FileType | null;
+      [x: string]: string | null;
     },
   }),
   getters: {
+    getActiveFiles(state) {
+      const primary_id = state.activeFiles[EDITORS.primary];
+      const secondary_id = state.activeFiles[EDITORS.secondary];
+      const filesState = useFileStore();
+      return {
+        [EDITORS.primary]: primary_id ? filesState.getFile(primary_id) : null,
+        [EDITORS.secondary]: secondary_id
+          ? filesState.getFile(secondary_id)
+          : null,
+      };
+    },
+    getActiveFileList() {
+      // todo: 解决any问题
+      const activeFiles: any = this.getActiveFiles;
+      return Object.keys(activeFiles).reduce((result, editor) => {
+        if (activeFiles[editor]) {
+          return Object.assign(result, {
+            [activeFiles[editor].id]: true,
+          });
+        } else {
+          return result;
+        }
+      }, {} as any);
+    },
     getChildren() {
-      const files = [
-        {
-          contents: '',
-          created_at: '',
-          editable: false,
-          id: 1,
-          name: '111',
-          parent: 'root',
-          type: 'directory',
-        },
-        {
-          contents: '',
-          created_at: '',
-          editable: false,
-          id: 2,
-          name: '2222',
-          parent: 'root',
-          type: 'directory',
-        },
-        {
-          contents: '',
-          created_at: '',
-          editable: false,
-          id: 3,
-          name: '33.js',
-          parent: 'root',
-          type: 'file',
-        },
-        {
-          contents: '',
-          created_at: '',
-          editable: false,
-          id: 4,
-          name: '44.js',
-          parent: 'root',
-          type: 'file',
-        },
-      ];
-      return files;
+      return (parentId = 'root') => {
+        const filesState = useFileStore();
+        const children = filesState.getFiles.filter(
+          (item: any) => item.parent === parentId
+        );
+        console.log('getChildren', children);
+        return children;
+      };
     },
   },
   actions: {

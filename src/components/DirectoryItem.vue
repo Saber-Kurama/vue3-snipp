@@ -1,20 +1,30 @@
 <!--
  * @Author: saber
  * @Date: 2022-02-15 14:40:54
- * @LastEditTime: 2022-02-18 19:33:33
+ * @LastEditTime: 2022-02-21 13:53:50
  * @LastEditors: saber
  * @Description: 
 -->
 <script setup lang="ts">
 import { FolderClose, FolderOpen, MoreOne } from '@icon-park/vue-next';
 import { onMounted, ref, type PropType } from 'vue';
+import { useEditorStore } from '@/stores/editor';
+import FileItem from './FileItem.vue';
+// import DirectoryItem from './DirectoryItem.vue';
+import { fileTypes } from '@/models/vFile.model';
 
+const components = {
+  [fileTypes.FILE]: FileItem,
+  [fileTypes.DIRECTORY]: this,
+};
+
+const editorState = useEditorStore();
 const props = defineProps({
-  file: Object as PropType<{ name: string }>,
+  file: Object as PropType<{ name: string; id: string }>,
 });
 const filename = ref(props.file?.name || '');
 const readonly = ref(true);
-const showChildren = ref(false);
+const showChildren = ref(true);
 const showContextMenu = ref(false);
 onMounted(() => {
   filename.value = props.file?.name || '???';
@@ -38,12 +48,26 @@ onMounted(() => {
         />
       </div>
     </div>
+    <div v-if="showChildren" class="files">
+      <component
+        v-for="child in editorState.getChildren(file?.id)"
+        :key="child.id"
+        :is="components[child.type]"
+        :file="child"
+        :isActive="!!editorState.getActiveFileList[child.id]"
+      />
+    </div>
   </div>
 </template>
 <style lang="scss" scoped>
 .directory-wrapper {
   display: flex;
   flex-direction: column;
+  .files {
+    margin-left: 10px;
+    display: flex;
+    flex-direction: column;
+  }
 }
 .file-item {
   display: flex;

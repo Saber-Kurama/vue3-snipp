@@ -1,7 +1,7 @@
 <!--
  * @Author: saber
  * @Date: 2022-02-14 10:13:35
- * @LastEditTime: 2022-02-14 11:55:42
+ * @LastEditTime: 2022-02-21 11:40:39
  * @LastEditors: saber
  * @Description: 
 -->
@@ -30,7 +30,7 @@ const getEditorModel = computed(() => {
     return 'single';
   }
 });
-const activePrimaryFile = editorState.activeFiles[EDITORS.primary] as FileType;
+const activePrimaryFile = editorState.getActiveFiles[EDITORS.primary] as FileType;
 </script>
 <template>
   <div :class="['editor-area', getEditorModel]">

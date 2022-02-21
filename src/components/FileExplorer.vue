@@ -1,7 +1,7 @@
 <!--
  * @Author: saber
  * @Date: 2022-02-15 09:56:34
- * @LastEditTime: 2022-02-15 14:35:30
+ * @LastEditTime: 2022-02-21 11:15:11
  * @LastEditors: saber
  * @Description: 
 -->
@@ -12,7 +12,7 @@ import { EDITORS, useEditorStore } from '@/stores/editor';
 // todo 怎么解决这个错误呢
 const SimpleBar1: any = SimpleBar;
 const editorState = useEditorStore();
-const children = editorState.getChildren;
+const children = editorState.getChildren();
 </script>
 <template>
   <div class="file-explorer">
