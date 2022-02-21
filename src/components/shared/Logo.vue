@@ -1,10 +1,18 @@
 <!--
  * @Author: saber
  * @Date: 2022-02-14 10:13:35
- * @LastEditTime: 2022-02-21 14:56:33
+ * @LastEditTime: 2022-02-21 15:19:18
  * @LastEditors: saber
  * @Description: 
 -->
+<script lang="ts" setup>
+const props = defineProps({
+  size: {
+    type: [String, Number],
+    default: '30',
+  },
+});
+</script>
 <template>
   <svg
     :width="props.size"
@@ -80,16 +88,5 @@
     />
   </svg>
 </template>
-
-<script lang="ts">
-export default {
-  props: {
-    size: {
-      type: [String, Number],
-      default: '30',
-    },
-  },
-};
-</script>
 
 <style></style>
