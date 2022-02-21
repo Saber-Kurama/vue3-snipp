@@ -1,14 +1,17 @@
 <!--
  * @Author: saber
  * @Date: 2022-02-15 14:42:05
- * @LastEditTime: 2022-02-15 15:32:00
+ * @LastEditTime: 2022-02-21 14:02:50
  * @LastEditors: saber
  * @Description: 
 -->
 <script setup lang="ts">
 import { FileCode } from '@icon-park/vue-next';
-import { ref } from 'vue';
-const filename = ref('saber');
+import { ref, type PropType } from 'vue';
+const props = defineProps({
+  file: Object as PropType<{ name: string; id: string }>,
+});
+const filename = ref(props.file?.name);
 const readonly = ref(true);
 </script>
 <template>
@@ -16,8 +19,8 @@ const readonly = ref(true);
     <div class="clickable-area">
       <FileCode class="icon" size="20px"></FileCode>
       <form>
-          <input type="text" v-model="filename" :readonly="readonly" size="2" />
-        </form>
+        <input type="text" v-model="filename" :readonly="readonly" size="2" />
+      </form>
     </div>
   </div>
 </template>
@@ -46,7 +49,7 @@ const readonly = ref(true);
     flex-direction: column;
   }
 
-   input {
+  input {
     border: 0;
     padding: 6px 8px;
     border-radius: 2px;
