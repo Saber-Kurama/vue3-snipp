@@ -1,7 +1,7 @@
 <!--
  * @Author: saber
  * @Date: 2022-02-15 14:40:54
- * @LastEditTime: 2022-02-21 13:53:50
+ * @LastEditTime: 2022-02-21 14:17:42
  * @LastEditors: saber
  * @Description: 
 -->
@@ -24,16 +24,20 @@ const props = defineProps({
 });
 const filename = ref(props.file?.name || '');
 const readonly = ref(true);
-const showChildren = ref(true);
+const showChildren = ref(false);
 const showContextMenu = ref(false);
 onMounted(() => {
   filename.value = props.file?.name || '???';
 });
+
+const toggleShowChildren = () => {
+  showChildren.value = !showChildren.value;
+};
 </script>
 <template>
   <div class="directory-wrapper">
     <div :class="['file-item']">
-      <div class="clickable-area">
+      <div class="clickable-area" @click="toggleShowChildren">
         <FolderOpen v-if="showChildren" class="icon" size="20px"></FolderOpen>
         <FolderClose v-else class="icon" size="20px"></FolderClose>
         <form>
@@ -141,6 +145,12 @@ onMounted(() => {
         transform: scale(0.95);
       }
     }
+  }
+
+  &:hover {
+    background: var(--color-secondary);
+    cursor: pointer;
+    color: var(--font-color);
   }
 }
 </style>
