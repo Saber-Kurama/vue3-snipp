@@ -1,22 +1,44 @@
 <!--
  * @Author: saber
  * @Date: 2022-02-15 09:56:34
- * @LastEditTime: 2022-02-21 11:15:11
+ * @LastEditTime: 2022-02-22 15:22:50
  * @LastEditors: saber
  * @Description: 
 -->
 <script lang="ts" setup>
 import { SimpleBar } from 'simplebar-vue3';
+import { FileAddition, FolderPlus } from '@icon-park/vue-next';
 import DirectoryListing from './DirectoryListing.vue';
 import { EDITORS, useEditorStore } from '@/stores/editor';
 // todo 怎么解决这个错误呢
 const SimpleBar1: any = SimpleBar;
 const editorState = useEditorStore();
 const children = editorState.getChildren();
+const setShowCreateFileModal = (obj: { flag: boolean }) => {
+  console.log(obj);
+};
 </script>
 <template>
   <div class="file-explorer">
-    <header> <h4>File Explorer</h4></header>
+    <header>
+      <h4>File Explorer</h4>
+      <div class="menu">
+        <div v-tooltip="'Create new file (Alt+N)'" class="icon-wrapper">
+          <FileAddition
+            size="18"
+            class="icon"
+            @click="setShowCreateFileModal({ flag: true })"
+          />
+        </div>
+        <div v-tooltip="'Create new folder (Ctrl+Alt+N)'" class="icon-wrapper">
+          <FolderPlus
+            size="18"
+            class="icon"
+            @click="setShowCreateFileModal({ flag: true })"
+          />
+        </div>
+      </div>
+    </header>
     <SimpleBar1 class="content-area">
       <DirectoryListing
         v-if="children && children.length > 0"
@@ -48,9 +70,35 @@ const children = editorState.getChildren();
     flex-direction: row;
     padding: 5px 10px 5px 10px;
     z-index: 99;
+
     h4 {
       font-weight: bold;
       flex: 1;
+    }
+
+    .menu {
+      display: flex;
+    }
+
+    .icon-wrapper {
+      position: relative;
+    }
+
+    .icon {
+      padding: 7px;
+      border-radius: 3px;
+      transition: 0.3s all ease-in-out;
+
+      &:hover {
+        cursor: pointer;
+        background: var(--color-secondary);
+        color: var(--color-primary);
+      }
+
+      &:active {
+        opacity: 0.7;
+        transform: scale(0.98);
+      }
     }
   }
   .content-area {
