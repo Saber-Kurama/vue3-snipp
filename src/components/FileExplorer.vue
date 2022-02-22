@@ -1,7 +1,7 @@
 <!--
  * @Author: saber
  * @Date: 2022-02-15 09:56:34
- * @LastEditTime: 2022-02-22 15:22:50
+ * @LastEditTime: 2022-02-22 15:48:42
  * @LastEditors: saber
  * @Description: 
 -->
@@ -10,12 +10,15 @@ import { SimpleBar } from 'simplebar-vue3';
 import { FileAddition, FolderPlus } from '@icon-park/vue-next';
 import DirectoryListing from './DirectoryListing.vue';
 import { EDITORS, useEditorStore } from '@/stores/editor';
+import { useUiStore } from '@/stores/ui';
 // todo 怎么解决这个错误呢
 const SimpleBar1: any = SimpleBar;
 const editorState = useEditorStore();
+const uiState = useUiStore();
 const children = editorState.getChildren();
 const setShowCreateFileModal = (obj: { flag: boolean }) => {
   console.log(obj);
+  uiState.setShowCreateFileModal(obj);
 };
 </script>
 <template>

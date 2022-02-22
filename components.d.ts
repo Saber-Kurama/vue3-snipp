@@ -8,6 +8,7 @@ declare module 'vue' {
     DirectoryItem: typeof import('./src/components/DirectoryItem.vue')['default']
     DirectoryListing: typeof import('./src/components/DirectoryListing.vue')['default']
     Editor: typeof import('./src/components/Editor.vue')['default']
+    FileCreationModal: typeof import('./src/components/FileCreationModal/index.vue')['default']
     FileExplorer: typeof import('./src/components/FileExplorer.vue')['default']
     FileItem: typeof import('./src/components/FileItem.vue')['default']
     HelloWorld: typeof import('./src/components/HelloWorld.vue')['default']

@@ -1,7 +1,7 @@
 <!--
  * @Author: saber
  * @Date: 2022-02-11 17:10:32
- * @LastEditTime: 2022-02-22 13:51:09
+ * @LastEditTime: 2022-02-22 15:50:45
  * @LastEditors: saber
  * @Description: 
 -->
@@ -9,6 +9,7 @@
 import SideNavigationBar from '@/components/SideNavigationBar.vue';
 import Editor from '@/components/Editor.vue';
 import FileExplorer from '@/components/FileExplorer.vue';
+import FileCreationModal from '@/components/FileCreationModal/index.vue';
 </script>
 
 <template>
@@ -20,6 +21,7 @@ import FileExplorer from '@/components/FileExplorer.vue';
       </div>
       <Editor />
     </div>
+    <FileCreationModal />
   </main>
 </template>
 

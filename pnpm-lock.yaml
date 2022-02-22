@@ -1,7 +1,7 @@
 lockfileVersion: 5.3
 
 specifiers:
-  '@dangojs/vue3-transitions': ^0.0.2
+  '@dangojs/vue3-transitions': ^0.0.3
   '@icon-park/vue-next': ^1.3.6
   '@rushstack/eslint-patch': ^1.1.0
   '@types/lodash': ^4.14.178
@@ -32,7 +32,7 @@ specifiers:
   vue-tsc: ^0.31.1
 
 dependencies:
-  '@dangojs/vue3-transitions': 0.0.2
+  '@dangojs/vue3-transitions': 0.0.3
   '@icon-park/vue-next': 1.3.6_vue@3.2.30
   floating-vue: 2.0.0-beta.6_vue@3.2.30
   lodash: 4.17.21
@@ -390,8 +390,8 @@ packages:
       to-fast-properties: 2.0.0
     dev: true
 
-  /@dangojs/vue3-transitions/0.0.2:
-    resolution: {integrity: sha512-1hkAYSC2kCUif06mHjjTn6/pZtpbxOPWQynI5huNOfL0dVXVnZ9381e0USqWgDJiwormOZ8yt3AqDc8dmRMNCw==}
+  /@dangojs/vue3-transitions/0.0.3:
+    resolution: {integrity: sha512-LzOSdPU60YbV1XmJ68h0kKr3q+oAOVJpGx3/3eTdaeiQokdsGYQeir4T0muNy/BTODpbTbEBnVzfnk/bZDAh0A==}
     engines: {node: '>=10', pnpm: '>=3'}
     dev: false
 
