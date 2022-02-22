@@ -1,13 +1,13 @@
 <!--
  * @Author: saber
  * @Date: 2022-02-22 15:31:22
- * @LastEditTime: 2022-02-22 17:38:13
+ * @LastEditTime: 2022-02-22 17:53:13
  * @LastEditors: saber
  * @Description: 
 -->
 <script lang="ts" setup>
 // @ts-ignore
-import { SlideYUpTransition } from '@dangojs/vue3-transitions';
+import { SlideYUpTransition, FadeTransition } from '@dangojs/vue3-transitions';
 import { computed, ref } from 'vue';
 import {
   Close,
@@ -44,6 +44,7 @@ const showModal = computed({
   },
   set(value) {
     //
+    uiState.setShowCreateFileModal({ flag: value });
   },
 });
 const getCurrentFileType = computed(() => {
@@ -59,18 +60,22 @@ const getCurrentFileType = computed(() => {
     return null;
   }
 });
+const closeModal = () => {
+  showModal.value = false;
+};
+
 const createNewFile = () => {
   console.log('----');
 };
 </script>
 <template>
   <div class="file-create">
-    <SlideYUpTransition>
+    <Transition>
       <div class="file-creation-modal" v-if="showModal">
         <div class="creation-card">
           <div class="header">
             <h3 class="title">Create new file</h3>
-            <button class="close-button">
+            <button class="close-button" @click="closeModal">
               <Close size="18" />
             </button>
           </div>
@@ -112,7 +117,7 @@ const createNewFile = () => {
           </div>
         </div>
       </div>
-    </SlideYUpTransition>
+    </Transition>
   </div>
 </template>
 <style lang="scss" scoped>
