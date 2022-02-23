@@ -110,11 +110,8 @@ export const useFileStore = defineStore('files', {
     },
   },
   actions: {
-    // todo: any
-    async createFile(fileDetails: any) {
-      // todo: showExplorerPanel
-      const details = fileDetails ? fileDetails : {};
-      const file = new VFile({ ...details, type: fileTypes.FILE });
+    addFileOrDirectory(file: VFile) {
+      // 这个逻辑的抽象
       const files = {
         ...this.files,
         // todo: ts提示
@@ -123,8 +120,24 @@ export const useFileStore = defineStore('files', {
       };
       this.files = files;
       this.filesById = Object.keys(files);
+    },
+    // todo: any
+    async createFile(fileDetails: any) {
+      // todo: showExplorerPanel
+      const details = fileDetails ? fileDetails : {};
+      const file = new VFile({ ...details, type: fileTypes.FILE });
+      this.addFileOrDirectory(file);
       // todo: 保存到 indexDB
       return file;
+    },
+    // todo: any
+    async createDirectory(directoryDetails: any) {
+      // todo: showExplorerPanel
+      const details = directoryDetails ? directoryDetails : {};
+      const directory = new VFile({ ...details, type: fileTypes.DIRECTORY });
+      this.addFileOrDirectory(directory);
+       // todo: 保存到 indexDB
+       return directory; 
     },
   },
 });

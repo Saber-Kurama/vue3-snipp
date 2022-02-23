@@ -65,10 +65,12 @@ export const useEditorStore = defineStore('editor', {
     },
     getChildren(state) {
       return (parentId = 'root') => {
+        console.log('??>>>>')
         const filesState = useFileStore();
         const children = filesState.getFiles.filter(
           (item: any) => item.parent === parentId
         );
+        console.log('children', children);
         return children;
       };
     },

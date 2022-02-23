@@ -16,7 +16,7 @@ import { fileTypes } from '@/models/vFile.model';
 import { ref, watch } from 'vue';
 
 const searchInput = ref('');
-const filesdata = ref<any[]>([]);
+const filesdata = ref<any[]>(props.files || []);
 // setTimeout(() => {
 //   searchInput.value = '';
 //   filesdata.value.push(...props.files);
@@ -31,9 +31,12 @@ const props = defineProps({
 watch(
   () => props.files,
   () => {
+    console.log('>>>???');
+    console.log('filesdata', filesdata.value);
     filesdata.value = props.files;
   }
 );
+// v-if="searchInput == ''"
 const components = {
   [fileTypes.FILE]: FileItem,
   [fileTypes.DIRECTORY]: DirectoryItem,
@@ -43,8 +46,7 @@ const components = {
   <div class="directory-listing">
     <FadeTransition
       tag="div"
-      group
-      v-if="searchInput == ''"
+      group 
     >
       <component
         v-for="file in filesdata"

@@ -11,15 +11,20 @@ import { FileAddition, FolderPlus } from '@icon-park/vue-next';
 import DirectoryListing from './DirectoryListing.vue';
 import { useEditorStore } from '@/stores/editor';
 import { useUiStore } from '@/stores/ui';
+import { useFileStore } from '@/stores/files';
 import { computed } from 'vue';
 // todo 怎么解决这个错误呢
 const SimpleBar1: any = SimpleBar;
 const editorState = useEditorStore();
 const uiState = useUiStore();
+const fileState = useFileStore();
 // 关于返回函数的问题
 const children = computed(() => editorState.getChildren());
 const setShowCreateFileModal = (obj: { flag: boolean }) => {
   uiState.setShowCreateFileModal(obj);
+};
+const createNewFolder = () => {
+  fileState.createDirectory({ editable: true });
 };
 </script>
 <template>
@@ -38,12 +43,13 @@ const setShowCreateFileModal = (obj: { flag: boolean }) => {
           <FolderPlus
             size="18"
             class="icon"
-            @click="setShowCreateFileModal({ flag: true })"
+            @click="createNewFolder"
           />
         </div>
       </div>
     </header>
     <SimpleBar1 class="content-area">
+      {{children.length}}
       <DirectoryListing
         v-if="children && children.length > 0"
         :files="children"
