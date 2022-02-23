@@ -1,13 +1,14 @@
 /*
  * @Author: saber
  * @Date: 2022-02-15 14:20:08
- * @LastEditTime: 2022-02-21 11:28:18
+ * @LastEditTime: 2022-02-23 19:16:20
  * @LastEditors: saber
  * @Description:
  */
 
 import { defineStore } from 'pinia';
 import sortBy from 'lodash/sortBy';
+import VFile, { fileTypes } from '@/models/vFile.model';
 
 interface FilesI {
   [k: string]: any;
@@ -106,6 +107,24 @@ export const useFileStore = defineStore('files', {
     },
     getFile: (state) => {
       return (id: string) => state.files[id];
+    },
+  },
+  actions: {
+    // todo: any
+    async createFile(fileDetails: any) {
+      // todo: showExplorerPanel
+      const details = fileDetails ? fileDetails : {};
+      const file = new VFile({ ...details, type: fileTypes.FILE });
+      const files = {
+        ...this.files,
+        // todo: ts提示
+        // @ts-ignore
+        [file.id]: file,
+      };
+      this.files = files;
+      this.filesById = Object.keys(files);
+      // todo: 保存到 indexDB
+      return file;
     },
   },
 });

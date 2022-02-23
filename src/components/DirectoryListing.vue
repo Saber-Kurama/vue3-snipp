@@ -1,7 +1,7 @@
 <!--
  * @Author: saber
  * @Date: 2022-02-15 10:18:58
- * @LastEditTime: 2022-02-21 22:42:41
+ * @LastEditTime: 2022-02-23 19:14:06
  * @LastEditors: saber
  * @Description: 
 -->
@@ -13,14 +13,14 @@ import '@dangojs/vue3-transitions/es/style/style.css';
 import FileItem from './FileItem.vue';
 import DirectoryItem from './DirectoryItem.vue';
 import { fileTypes } from '@/models/vFile.model';
-import { ref } from 'vue';
+import { ref, watch } from 'vue';
 
 const searchInput = ref('');
 const filesdata = ref<any[]>([]);
-setTimeout(() => {
-  searchInput.value = '';
-  filesdata.value.push(...props.files);
-}, 0);
+// setTimeout(() => {
+//   searchInput.value = '';
+//   filesdata.value.push(...props.files);
+// }, 0);
 const props = defineProps({
   files: {
     type: Array as () => Array<any>,
@@ -28,6 +28,12 @@ const props = defineProps({
   },
 });
 
+watch(
+  () => props.files,
+  () => {
+    filesdata.value = props.files;
+  }
+);
 const components = {
   [fileTypes.FILE]: FileItem,
   [fileTypes.DIRECTORY]: DirectoryItem,

@@ -1,13 +1,17 @@
 <!--
  * @Author: saber
  * @Date: 2022-02-22 15:31:22
- * @LastEditTime: 2022-02-22 17:53:13
+ * @LastEditTime: 2022-02-23 19:18:23
  * @LastEditors: saber
  * @Description: 
 -->
 <script lang="ts" setup>
 // @ts-ignore
-import { SlideYUpTransition, FadeTransition } from '@dangojs/vue3-transitions';
+import {
+  SlideYUpTransition,
+  SlideXRightTransition,
+  // @ts-ignore
+} from '@dangojs/vue3-transitions';
 import { computed, ref } from 'vue';
 import {
   Close,
@@ -17,8 +21,12 @@ import {
   ElectronicPen,
 } from '@icon-park/vue-next';
 import { useUiStore } from '@/stores/ui';
+import { useFileStore } from '@/stores/files';
+import { useEditorStore } from '@/stores/editor';
 
 const uiState = useUiStore();
+const fileState = useFileStore();
+const editState = useEditorStore();
 // const showModal = ref(false);
 const filename = ref('');
 const fileTypes = {
@@ -64,13 +72,18 @@ const closeModal = () => {
   showModal.value = false;
 };
 
-const createNewFile = () => {
-  console.log('----');
+const createNewFile = async () => {
+  if (!filename.value) {
+    return;
+  }
+  const file = await fileState.createFile({ name: filename.value });
+  filename.value = '';
+  closeModal();
 };
 </script>
 <template>
   <div class="file-create">
-    <Transition>
+    <SlideYUpTransition>
       <div class="file-creation-modal" v-if="showModal">
         <div class="creation-card">
           <div class="header">
@@ -88,15 +101,15 @@ const createNewFile = () => {
                 ref="fileNameInput"
                 autofocus
               />
-              <!-- <SlideXRightTransition> -->
-              <button
-                v-if="filename && filename.length > 0"
-                class="create-btn"
-                type="submit"
-              >
-                <ArrowRight size="20" class="create-icon" />
-              </button>
-              <!-- </SlideXRightTransition> -->
+              <SlideXRightTransition>
+                <button
+                  v-if="filename && filename.length > 0"
+                  class="create-btn"
+                  type="submit"
+                >
+                  <ArrowRight size="20" class="create-icon" />
+                </button>
+              </SlideXRightTransition>
             </form>
             <div class="file-types">
               <div
@@ -117,7 +130,7 @@ const createNewFile = () => {
           </div>
         </div>
       </div>
-    </Transition>
+    </SlideYUpTransition>
   </div>
 </template>
 <style lang="scss" scoped>

@@ -1,7 +1,7 @@
 /*
  * @Author: saber
  * @Date: 2022-02-14 10:13:35
- * @LastEditTime: 2022-02-21 11:47:57
+ * @LastEditTime: 2022-02-23 19:17:15
  * @LastEditors: saber
  * @Description:
  */
@@ -63,13 +63,12 @@ export const useEditorStore = defineStore('editor', {
         }
       }, {} as any);
     },
-    getChildren() {
+    getChildren(state) {
       return (parentId = 'root') => {
         const filesState = useFileStore();
         const children = filesState.getFiles.filter(
           (item: any) => item.parent === parentId
         );
-        console.log('getChildren', children);
         return children;
       };
     },
