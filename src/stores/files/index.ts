@@ -92,7 +92,7 @@ const defaultState = {
   filteredFiles: {},
 };
 
-export const useFileStore = defineStore('files', {
+export const useFilesStore = defineStore('files', {
   state: () => {
     return {
       ...defaultState,
@@ -110,14 +110,8 @@ export const useFileStore = defineStore('files', {
     },
   },
   actions: {
-    addFileOrDirectory(file: VFile) {
-      // 这个逻辑的抽象
-      const files = {
-        ...this.files,
-        // todo: ts提示
-        // @ts-ignore
-        [file.id]: file,
-      };
+    setFiles(files: {[x: string]: VFile}) {
+      // // 这个逻辑的抽象
       this.files = files;
       this.filesById = Object.keys(files);
     },
@@ -126,7 +120,13 @@ export const useFileStore = defineStore('files', {
       // todo: showExplorerPanel
       const details = fileDetails ? fileDetails : {};
       const file = new VFile({ ...details, type: fileTypes.FILE });
-      this.addFileOrDirectory(file);
+      const files = {
+        ...this.files,
+        // todo: ts提示
+        // @ts-ignore
+        [file.id]: file,
+      };
+      this.setFiles(files);
       // todo: 保存到 indexDB
       return file;
     },
@@ -135,9 +135,29 @@ export const useFileStore = defineStore('files', {
       // todo: showExplorerPanel
       const details = directoryDetails ? directoryDetails : {};
       const directory = new VFile({ ...details, type: fileTypes.DIRECTORY });
-      this.addFileOrDirectory(directory);
+      const files = {
+        ...this.files,
+        // todo: ts提示
+        // @ts-ignore
+        [directory.id]: directory,
+      };
+      this.setFiles(files);
        // todo: 保存到 indexDB
        return directory; 
     },
+    // todo: any
+    async renameFile({ id, name }: any) {
+      if (!id) return;
+      const files = {
+        ...this.files,
+        [id]: {
+          ...this.files[id],
+          name,
+          editable: false,
+        },
+      }
+      this.setFiles(files);
+      // todo: 保存到 indexDB
+    }, 
   },
 });

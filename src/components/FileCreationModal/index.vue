@@ -21,11 +21,11 @@ import {
   ElectronicPen,
 } from '@icon-park/vue-next';
 import { useUiStore } from '@/stores/ui';
-import { useFileStore } from '@/stores/files';
+import { useFilesStore } from '@/stores/files';
 import { useEditorStore } from '@/stores/editor';
 
 const uiState = useUiStore();
-const fileState = useFileStore();
+const filesState = useFilesStore();
 const editState = useEditorStore();
 // const showModal = ref(false);
 const filename = ref('');
@@ -76,7 +76,7 @@ const createNewFile = async () => {
   if (!filename.value) {
     return;
   }
-  const file = await fileState.createFile({ name: filename.value });
+  const file = await filesState.createFile({ name: filename.value });
   filename.value = '';
   closeModal();
 };

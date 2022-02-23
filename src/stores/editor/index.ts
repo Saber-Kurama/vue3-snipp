@@ -6,7 +6,7 @@
  * @Description:
  */
 import { defineStore } from 'pinia';
-import { useFileStore } from '../files';
+import { useFilesStore } from '../files';
 
 // 编辑面板 支持 两个
 export const EDITORS = {
@@ -42,7 +42,7 @@ export const useEditorStore = defineStore('editor', {
     getActiveFiles(state) {
       const primary_id = state.activeFiles[EDITORS.primary];
       const secondary_id = state.activeFiles[EDITORS.secondary];
-      const filesState = useFileStore();
+      const filesState = useFilesStore();
       return {
         [EDITORS.primary]: primary_id ? filesState.getFile(primary_id) : null,
         [EDITORS.secondary]: secondary_id
@@ -66,7 +66,7 @@ export const useEditorStore = defineStore('editor', {
     getChildren(state) {
       return (parentId = 'root') => {
         console.log('??>>>>')
-        const filesState = useFileStore();
+        const filesState = useFilesStore();
         const children = filesState.getFiles.filter(
           (item: any) => item.parent === parentId
         );

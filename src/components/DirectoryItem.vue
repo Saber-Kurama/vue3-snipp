@@ -9,6 +9,7 @@
 import { FolderClose, FolderOpen, MoreOne } from '@icon-park/vue-next';
 import { onMounted, ref, type PropType } from 'vue';
 import { useEditorStore } from '@/stores/editor';
+import { useFilesStore } from '@/stores/files';
 import FileItem from './FileItem.vue';
 // import DirectoryItem from './DirectoryItem.vue';
 import { fileTypes } from '@/models/vFile.model';
@@ -18,7 +19,9 @@ const components = {
   [fileTypes.DIRECTORY]: this,
 };
 
+const refInput = ref();
 const editorState = useEditorStore();
+const filesState = useFilesStore();
 const props = defineProps({
   file: Object as PropType<{ name: string; id: string }>,
 });
@@ -27,7 +30,12 @@ const readonly = ref(true);
 const showChildren = ref(false);
 const showContextMenu = ref(false);
 onMounted(() => {
-  filename.value = props.file?.name || '???';
+  readonly.value = !props.file.editable;
+  filename.value = props.file?.name || '';
+  if (props.file.editable) {
+      // this.$refs.input.focus();
+      refInput.value.focus();
+    }
 });
 
 const toggleShowChildren = () => {
@@ -36,6 +44,7 @@ const toggleShowChildren = () => {
 
 const changeFileName = () => {
   if (filename.value) {
+    filesState.renameFile({ id: props.file.id, name: filename.value });
     // 重命名
     readonly.value = true;
   } else {
@@ -55,6 +64,7 @@ const changeFileName = () => {
         <FolderClose v-else class="icon" size="20px"></FolderClose>
         <form>
           <input
+            ref="refInput"
             type="text"
             v-model="filename"
             :readonly="readonly"
