@@ -44,8 +44,6 @@ const components = {
     <FadeTransition
       tag="div"
       group
-      :duration="1000"
-      :delay="1000"
       v-if="searchInput == ''"
     >
       <component

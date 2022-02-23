@@ -68,5 +68,18 @@ const readonly = ref(true);
       border-bottom: 2px solid var(--color-primary);
     }
   }
+
+  &:hover {
+    background: var(--color-secondary);
+    cursor: pointer;
+    color: var(--font-color);
+
+    .context-menu {
+      display: flex;
+      .trigger-icon {
+        visibility: visible;
+      }
+    }
+  }
 }
 </style>
