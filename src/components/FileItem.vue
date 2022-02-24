@@ -1,7 +1,7 @@
 <!--
  * @Author: saber
  * @Date: 2022-02-15 14:42:05
- * @LastEditTime: 2022-02-24 18:28:25
+ * @LastEditTime: 2022-02-24 18:38:03
  * @LastEditors: saber
  * @Description: 
 -->
@@ -118,7 +118,7 @@ const handleDragEnd = () => {
   <div :class="['file-item']">
     <div
       class="clickable-area"
-      @click="openFile({ id: props.file?.id })"
+      @click="editorState.openFile({ id: props.file?.id })"
       @dblclick="readonly = !readonly"
       draggable="true"
       @dragstart="handleDrag"

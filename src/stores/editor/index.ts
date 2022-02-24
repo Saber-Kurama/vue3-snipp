@@ -1,10 +1,11 @@
 /*
  * @Author: saber
  * @Date: 2022-02-14 10:13:35
- * @LastEditTime: 2022-02-24 18:00:58
+ * @LastEditTime: 2022-02-24 18:53:42
  * @LastEditors: saber
  * @Description:
  */
+import { keys } from 'lodash';
 import { defineStore } from 'pinia';
 import { useFilesStore } from '../files';
 
@@ -27,11 +28,8 @@ export const useEditorStore = defineStore('editor', {
     draggingId: null as unknown as string | null,
     draggingFileId: null as unknown as string | null,
     openFiles: {
-      [EDITORS.primary]: [
-        { id: '11', name: 'kafa' },
-        { id: '22', name: 'saber' },
-      ] as FileType[],
-      [EDITORS.secondary]: [] as FileType[],
+      [EDITORS.primary]: [] as string[],
+      [EDITORS.secondary]: [] as string[],
     },
     activeFiles: {
       [EDITORS.primary]: '11',
@@ -41,6 +39,19 @@ export const useEditorStore = defineStore('editor', {
     },
   }),
   getters: {
+    getOpenFiles(state) {
+      const filesState = useFilesStore();
+      // todo：返回一个方法
+      return Object.keys(state.openFiles).reduce((result, editor) => {
+        return Object.assign(result, {
+          [editor]: state.openFiles[editor].reduce((file_results, id) => {
+            const file = filesState.getFile(id);
+            if (file) file_results.push(file);
+            return file_results;
+          }, [] as any[]),
+        });
+      }, {} as any);
+    },
     getActiveFiles(state) {
       const primary_id = state.activeFiles[EDITORS.primary];
       const secondary_id = state.activeFiles[EDITORS.secondary];
@@ -67,7 +78,6 @@ export const useEditorStore = defineStore('editor', {
     },
     getChildren(state) {
       return (parentId = 'root') => {
-        console.log('??>>>>');
         const filesState = useFilesStore();
         const children = filesState.getFiles.filter(
           (item: any) => item.parent === parentId
@@ -78,6 +88,14 @@ export const useEditorStore = defineStore('editor', {
     },
   },
   actions: {
+    // todo: any
+    openFile({ id, editor }: any) {
+      editor = editor || this.activeEditor;
+      // 如果没有包含
+      if (!this.openFiles[editor].includes(id)) {
+        this.openFiles[editor].push(id);
+      }
+    },
     closeFile() {
       // 删除文件
     },
