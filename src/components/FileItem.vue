@@ -1,7 +1,7 @@
 <!--
  * @Author: saber
  * @Date: 2022-02-15 14:42:05
- * @LastEditTime: 2022-02-24 15:58:15
+ * @LastEditTime: 2022-02-24 18:10:37
  * @LastEditors: saber
  * @Description: 
 -->
@@ -20,9 +20,11 @@ import {
   SlideYUpTransition,
   // @ts-ignore
 } from '@dangojs/vue3-transitions';
-import { nextTick, onMounted, ref, watch, type PropType } from 'vue';
+import { onMounted, ref, watch, type PropType } from 'vue';
 import { useFilesStore } from '@/stores/files';
+import { useEditorStore } from '@/stores/editor';
 
+const editorState = useEditorStore();
 const filesState = useFilesStore();
 const props = defineProps({
   file: Object as PropType<{ name: string; id: string; editable: boolean }>,
@@ -86,10 +88,31 @@ watch(
     }
   }
 );
+// 文件的拖拽
+const handleDrag = (event: DragEvent) => {
+  if (event.dataTransfer && props.file) {
+    event.dataTransfer.dropEffect = 'move';
+    event.dataTransfer.effectAllowed = 'move';
+    event.dataTransfer.setData('fileId', props.file.id);
+    // this.setDraggingFileId({ id: this.file.id });
+  }
+};
+const handleDragEnd = () => {
+  setTimeout(() => {
+    // this.setDraggingFileId({ id: null });
+    editorState.setDraggingId(null);
+  }, 100);
+};
 </script>
 <template>
   <div :class="['file-item']">
-    <div class="clickable-area" @dblclick="readonly = !readonly">
+    <div
+      class="clickable-area"
+      @dblclick="readonly = !readonly"
+      draggable="true"
+      @dragstart="handleDrag"
+      @dragend="handleDragEnd"
+    >
       <FileCode class="icon" size="20px"></FileCode>
       <form @submit.prevent="refInput?.blur()">
         <input
