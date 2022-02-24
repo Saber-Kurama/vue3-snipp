@@ -1,7 +1,7 @@
 <!--
  * @Author: saber
  * @Date: 2022-02-15 14:40:54
- * @LastEditTime: 2022-02-24 15:04:45
+ * @LastEditTime: 2022-02-24 15:16:21
  * @LastEditors: saber
  * @Description: 
 -->
@@ -39,7 +39,7 @@ const components = {
   [fileTypes.DIRECTORY]: getCurrentInstance()?.type,
 };
 
-const refInput = ref();
+const refInput = ref<HTMLElement | null>();
 const editorState = useEditorStore();
 const filesState = useFilesStore();
 const props = defineProps({
@@ -56,7 +56,7 @@ onMounted(() => {
   filename.value = props.file?.name || '';
   if (props.file?.editable) {
     // this.$refs.input.focus();
-    refInput.value.focus();
+    refInput.value?.focus();
   }
 });
 
@@ -96,7 +96,7 @@ const createNewFolder = () => {
 const openRenameMode = () => {
   showContextMenu.value = false;
   readonly.value = false;
-  refInput.value.focus();
+  refInput.value?.focus();
 };
 const saveFolderAs = () => {
   console.log('--');
@@ -118,7 +118,7 @@ const deleteCurrentFolder = () => {
       >
         <FolderOpen v-if="showChildren" class="icon" size="20px"></FolderOpen>
         <FolderClose v-else class="icon" size="20px"></FolderClose>
-        <form @submit.prevent="refInput.blur()">
+        <form @submit.prevent="refInput?.blur()">
           <input
             ref="refInput"
             type="text"

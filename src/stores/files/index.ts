@@ -1,7 +1,7 @@
 /*
  * @Author: saber
  * @Date: 2022-02-15 14:20:08
- * @LastEditTime: 2022-02-24 14:57:15
+ * @LastEditTime: 2022-02-24 15:58:59
  * @LastEditors: saber
  * @Description:
  */
@@ -159,6 +159,12 @@ export const useFilesStore = defineStore('files', {
       };
       this.setFiles(files);
       // todo: 保存到 indexDB
+    },
+    // todo: any
+    async deleteFile({ id }: any) {
+      if (!id) return;
+      const files = omit(this.files, id);
+      this.setFiles(files);
     },
     // todo: any
     async deleteDirectory({ id }: any) {

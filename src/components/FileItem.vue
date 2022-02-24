@@ -1,26 +1,131 @@
 <!--
  * @Author: saber
  * @Date: 2022-02-15 14:42:05
- * @LastEditTime: 2022-02-21 14:02:50
+ * @LastEditTime: 2022-02-24 15:58:15
  * @LastEditors: saber
  * @Description: 
 -->
 <script setup lang="ts">
-import { FileCode } from '@icon-park/vue-next';
-import { ref, type PropType } from 'vue';
+import {
+  FileCode,
+  FileAddition,
+  FolderPlus,
+  MoreOne,
+  Edit,
+  Download,
+  Delete,
+} from '@icon-park/vue-next';
+// @ts-ignore
+import {
+  SlideYUpTransition,
+  // @ts-ignore
+} from '@dangojs/vue3-transitions';
+import { nextTick, onMounted, ref, watch, type PropType } from 'vue';
+import { useFilesStore } from '@/stores/files';
+
+const filesState = useFilesStore();
 const props = defineProps({
-  file: Object as PropType<{ name: string; id: string }>,
+  file: Object as PropType<{ name: string; id: string; editable: boolean }>,
 });
 const filename = ref(props.file?.name);
 const readonly = ref(true);
+const refInput = ref<HTMLElement | null>();
+const showContextMenu = ref(false);
+const toggleContextMenu = () => {
+  showContextMenu.value = !showContextMenu.value;
+};
+const changeFileName = () => {
+  console.log('changeFileName');
+  if (filename.value) {
+    if (props.file) {
+      filesState.renameFile({ id: props.file.id, name: filename.value });
+      readonly.value = true;
+      // this.openFile({ id: this.file.id });
+    }
+  } else {
+    // todo 删除文件
+  }
+};
+const openRenameMode = () => {
+  showContextMenu.value = false;
+  readonly.value = false;
+  refInput.value?.focus();
+};
+const saveFolderAs = () => {
+  console.log('--');
+};
+const deleteCurrentFile = () => {
+  showContextMenu.value = false;
+  if (props.file) {
+    filesState.deleteFile({ id: props.file.id });
+  }
+};
+onMounted(() => {
+  readonly.value = !props.file?.editable;
+  filename.value = props.file?.name || '';
+  if (props.file?.editable) {
+    // this.$refs.input.focus();
+    refInput.value?.focus();
+  }
+});
+watch(
+  () => props.file,
+  (newVal) => {
+    if (newVal) {
+      readonly.value = newVal.editable;
+      filename.value = newVal.name;
+      // todo: 为啥这样 不能正确 focus？
+      // if (newVal.editable) {
+      //   // setTimeout(() => {
+      //   // refInput.value?.focus();
+      //   // }, 200);
+      //   nextTick(() => {
+      //     refInput.value?.focus();
+      //   });
+      // }
+    }
+  }
+);
 </script>
 <template>
   <div :class="['file-item']">
-    <div class="clickable-area">
+    <div class="clickable-area" @dblclick="readonly = !readonly">
       <FileCode class="icon" size="20px"></FileCode>
-      <form>
-        <input type="text" v-model="filename" :readonly="readonly" size="2" />
+      <form @submit.prevent="refInput?.blur()">
+        <input
+          ref="refInput"
+          type="text"
+          v-model="filename"
+          :readonly="readonly"
+          size="2"
+          @blur="changeFileName"
+        />
       </form>
+    </div>
+    <div class="context-menu">
+      <MoreOne
+        class="trigger-icon no-margin"
+        :style="showContextMenu ? 'visibility: visible' : null"
+        size="18px"
+        @click="toggleContextMenu"
+      />
+      <SlideYUpTransition>
+        <div
+          v-if="showContextMenu"
+          class="options"
+          @mouseleave.once="showContextMenu = false"
+        >
+          <div class="option-item" @click="openRenameMode">
+            <Edit size="18" class="icon" />Rename
+          </div>
+          <div class="option-item" @click="saveFolderAs">
+            <Download size="18" class="icon" />Download
+          </div>
+          <div class="option-item" @click="deleteCurrentFile">
+            <Delete size="18" class="icon" />Delete File
+          </div>
+        </div>
+      </SlideYUpTransition>
     </div>
   </div>
 </template>
@@ -32,6 +137,12 @@ const readonly = ref(true);
   padding: 2px 5px 2px 0;
   margin: 0 5px 1px 5px;
   border-radius: 5px;
+
+  &.active {
+    // color: var(--color-primary);
+    background: var(--color-secondary);
+  }
+
   .clickable-area {
     display: flex;
     align-items: center;
@@ -66,6 +177,61 @@ const readonly = ref(true);
 
     &:focus {
       border-bottom: 2px solid var(--color-primary);
+    }
+  }
+
+  .context-menu {
+    display: none;
+    align-items: center;
+    justify-content: center;
+    align-items: center;
+    position: relative;
+    transition: 0.3s all ease-in-out;
+
+    .trigger-icon {
+      display: block;
+      visibility: hidden;
+      padding: 5px;
+      border-radius: 5px;
+      &:hover {
+        background: var(--color-secondary-light);
+      }
+
+      &:active {
+        transform: scale(0.95);
+      }
+    }
+
+    .options {
+      position: absolute;
+      right: 0;
+      top: 35px;
+      width: 170px;
+      height: auto;
+      z-index: 99;
+      display: flex;
+      flex-direction: column;
+      border-radius: 5px;
+      background: var(--color-secondary);
+      box-shadow: var(--smooth-shadow);
+      border: 1px solid var(--border-color);
+      padding: 5px;
+
+      .option-item {
+        display: flex;
+        align-items: center;
+        padding: 10px;
+        border-radius: 3px;
+
+        &:hover {
+          cursor: pointer;
+          // background: var(--color-secondary-light);
+          color: var(--color-primary);
+          .icon {
+            color: var(--color-primary);
+          }
+        }
+      }
     }
   }
 
