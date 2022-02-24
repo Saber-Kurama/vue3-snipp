@@ -1,7 +1,7 @@
 <!--
  * @Author: saber
  * @Date: 2022-02-15 14:40:54
- * @LastEditTime: 2022-02-24 15:16:21
+ * @LastEditTime: 2022-02-24 18:05:04
  * @LastEditors: saber
  * @Description: 
 -->
@@ -44,6 +44,7 @@ const editorState = useEditorStore();
 const filesState = useFilesStore();
 const props = defineProps({
   file: Object as PropType<{ name: string; id: string; editable: boolean }>,
+  isActive: Boolean,
 });
 const filename = ref(props.file?.name || '');
 const readonly = ref(true);
@@ -107,14 +108,44 @@ const deleteCurrentFolder = () => {
     filesState.deleteDirectory({ id: props.file.id });
   }
 };
+// 拖拽
+const handleDrag = (event: DragEvent) => {
+  if (props.file && event.dataTransfer) {
+    event.dataTransfer.dropEffect = 'move';
+    event.dataTransfer.effectAllowed = 'move';
+    event.dataTransfer.setData('fileId', props.file.id);
+  }
+};
+const handleDragOver = () => {
+  if (props.file && editorState.draggingId !== props.file.id) {
+    editorState.setDraggingId(props.file.id);
+  }
+};
+const handleDrop = (event: DragEvent) => {
+  if (props.file && event.dataTransfer) {
+    const fileId = event.dataTransfer.getData('fileId');
+    editorState.setDraggingId(null);
+    if (fileId === props.file.id) return;
+    filesState.moveFile({ id: fileId, directoryId: props.file.id });
+    showChildren.value = true;
+  }
+};
 </script>
 <template>
-  <div class="directory-wrapper">
-    <div :class="['file-item']">
+  <div
+    class="directory-wrapper"
+    :class="{ highlighted: editorState.draggingId === props.file?.id }"
+    @drop.stop="handleDrop"
+    @dragover.prevent.stop="handleDragOver"
+    @dragenter.prevent
+  >
+    <div :class="['file-item', { active: props.isActive || showContextMenu }]">
       <div
         class="clickable-area"
         @click="toggleShowChildren"
         @dblclick="readonly = !readonly"
+        draggable="true"
+        @dragstart="handleDrag"
       >
         <FolderOpen v-if="showChildren" class="icon" size="20px"></FolderOpen>
         <FolderClose v-else class="icon" size="20px"></FolderClose>
@@ -173,6 +204,10 @@ const deleteCurrentFolder = () => {
 .directory-wrapper {
   display: flex;
   flex-direction: column;
+
+  &.highlighted {
+    background-color: var(--drag-over-color);
+  }
   .files {
     margin-left: 10px;
     display: flex;
@@ -186,7 +221,10 @@ const deleteCurrentFolder = () => {
   padding: 2px 5px 2px 0;
   margin: 0px 5px 1px 5px;
   border-radius: 5px;
-
+  &.active {
+    // color: var(--color-primary);
+    background: var(--color-secondary);
+  }
   .clickable-area {
     display: flex;
     align-items: center;

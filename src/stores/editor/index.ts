@@ -1,7 +1,7 @@
 /*
  * @Author: saber
  * @Date: 2022-02-14 10:13:35
- * @LastEditTime: 2022-02-23 19:17:15
+ * @LastEditTime: 2022-02-24 18:00:58
  * @LastEditors: saber
  * @Description:
  */
@@ -24,6 +24,8 @@ export interface FileType {
 export const useEditorStore = defineStore('editor', {
   state: () => ({
     activeEditor: EDITORS.primary,
+    draggingId: null as unknown as string | null,
+    draggingFileId: null as unknown as string | null,
     openFiles: {
       [EDITORS.primary]: [
         { id: '11', name: 'kafa' },
@@ -65,7 +67,7 @@ export const useEditorStore = defineStore('editor', {
     },
     getChildren(state) {
       return (parentId = 'root') => {
-        console.log('??>>>>')
+        console.log('??>>>>');
         const filesState = useFilesStore();
         const children = filesState.getFiles.filter(
           (item: any) => item.parent === parentId
@@ -78,6 +80,9 @@ export const useEditorStore = defineStore('editor', {
   actions: {
     closeFile() {
       // 删除文件
+    },
+    setDraggingId(id: string | null) {
+      this.draggingId = id;
     },
   },
 });

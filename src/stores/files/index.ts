@@ -1,7 +1,7 @@
 /*
  * @Author: saber
  * @Date: 2022-02-15 14:20:08
- * @LastEditTime: 2022-02-24 15:58:59
+ * @LastEditTime: 2022-02-24 18:01:59
  * @LastEditors: saber
  * @Description:
  */
@@ -154,6 +154,20 @@ export const useFilesStore = defineStore('files', {
         [id]: {
           ...this.files[id],
           name,
+          editable: false,
+        },
+      };
+      this.setFiles(files);
+      // todo: 保存到 indexDB
+    },
+    // todo: any
+    async moveFile({ id, directoryId }: any) {
+      if (!id) return;
+      const files = {
+        ...this.files,
+        [id]: {
+          ...this.files[id],
+          parent: directoryId,
           editable: false,
         },
       };

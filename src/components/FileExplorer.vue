@@ -1,7 +1,7 @@
 <!--
  * @Author: saber
  * @Date: 2022-02-15 09:56:34
- * @LastEditTime: 2022-02-24 11:30:45
+ * @LastEditTime: 2022-02-24 18:03:28
  * @LastEditors: saber
  * @Description: 
 -->
@@ -26,9 +26,29 @@ const setShowCreateFileModal = (obj: { flag: boolean }) => {
 const createNewFolder = () => {
   filesState.createDirectory({ editable: true });
 };
+
+// 拖拽放置
+const handleDragOver = () => {
+  if (editorState.draggingId !== 'root') {
+    editorState.setDraggingId('root');
+  }
+};
+const handleDrop = (event: DragEvent) => {
+  if (event.dataTransfer) {
+    const fileId = event.dataTransfer.getData('fileId');
+    filesState.moveFile({ id: fileId, directoryId: 'root' });
+    editorState.setDraggingId(null);
+  }
+};
 </script>
 <template>
-  <div class="file-explorer">
+  <div
+    class="file-explorer"
+    :class="{ highlighted: editorState.draggingId === 'root' }"
+    @drop="handleDrop"
+    @dragover.prevent="handleDragOver"
+    @dragenter.prevent
+  >
     <header>
       <h4>File Explorer</h4>
       <div class="menu">
@@ -69,6 +89,10 @@ const createNewFolder = () => {
   min-width: 0;
   min-height: 0;
   border-right: 1px solid var(--border-color);
+
+  &.highlighted {
+    background-color: var(--drag-over-color);
+  }
 
   header {
     display: flex;

@@ -1,7 +1,7 @@
 <!--
  * @Author: saber
  * @Date: 2022-02-15 10:18:58
- * @LastEditTime: 2022-02-24 11:38:27
+ * @LastEditTime: 2022-02-24 17:35:37
  * @LastEditors: saber
  * @Description: 
 -->
@@ -10,6 +10,7 @@
 // @ts-ignore
 import { FadeTransition } from '@dangojs/vue3-transitions';
 import '@dangojs/vue3-transitions/es/style/style.css';
+import { useEditorStore } from '@/stores/editor';
 import FileItem from './FileItem.vue';
 import DirectoryItem from './DirectoryItem.vue';
 import { fileTypes } from '@/models/vFile.model';
@@ -19,6 +20,7 @@ import { ref, watch } from 'vue';
 //   searchInput.value = '';
 //   filesdata.value.push(...props.files);
 // }, 0);
+const editorState = useEditorStore();
 const props = defineProps({
   files: {
     type: Array as () => Array<any>,
@@ -49,6 +51,7 @@ const components = {
         :key="file.id"
         :is="components[file.type]"
         :file="file"
+        :isActive="!!editorState.getActiveFileList[file.id]"
       ></component>
     </FadeTransition>
   </div>
