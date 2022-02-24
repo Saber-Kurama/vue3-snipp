@@ -1,7 +1,7 @@
 <!--
  * @Author: saber
  * @Date: 2022-02-15 14:42:05
- * @LastEditTime: 2022-02-24 18:10:37
+ * @LastEditTime: 2022-02-24 18:28:25
  * @LastEditors: saber
  * @Description: 
 -->
@@ -33,6 +33,10 @@ const filename = ref(props.file?.name);
 const readonly = ref(true);
 const refInput = ref<HTMLElement | null>();
 const showContextMenu = ref(false);
+
+const openFile = (file: any) => {
+  console.log('openFile', file);
+};
 const toggleContextMenu = () => {
   showContextMenu.value = !showContextMenu.value;
 };
@@ -41,6 +45,7 @@ const changeFileName = () => {
   if (filename.value) {
     if (props.file) {
       filesState.renameFile({ id: props.file.id, name: filename.value });
+      console.log('changeFileName', readonly.value);
       readonly.value = true;
       // this.openFile({ id: this.file.id });
     }
@@ -70,24 +75,29 @@ onMounted(() => {
     refInput.value?.focus();
   }
 });
-watch(
-  () => props.file,
-  (newVal) => {
-    if (newVal) {
-      readonly.value = newVal.editable;
-      filename.value = newVal.name;
-      // todo: 为啥这样 不能正确 focus？
-      // if (newVal.editable) {
-      //   // setTimeout(() => {
-      //   // refInput.value?.focus();
-      //   // }, 200);
-      //   nextTick(() => {
-      //     refInput.value?.focus();
-      //   });
-      // }
-    }
-  }
-);
+// watch(readonly, (newVal) => {
+//   if (!newVal) {
+//     refInput.value?.focus();
+//   }
+// });
+// watch(
+//   () => props.file,
+//   (newVal) => {
+//     if (newVal) {
+//       // readonly.value = !newVal.editable;
+//       // filename.value = newVal.name;
+//       // todo: 为啥这样 不能正确 focus？
+//       // if (newVal.editable) {
+//       //   // setTimeout(() => {
+//       //   // refInput.value?.focus();
+//       //   // }, 200);
+//       //   nextTick(() => {
+//       //     refInput.value?.focus();
+//       //   });
+//       // }
+//     }
+//   }
+// );
 // 文件的拖拽
 const handleDrag = (event: DragEvent) => {
   if (event.dataTransfer && props.file) {
@@ -108,6 +118,7 @@ const handleDragEnd = () => {
   <div :class="['file-item']">
     <div
       class="clickable-area"
+      @click="openFile({ id: props.file?.id })"
       @dblclick="readonly = !readonly"
       draggable="true"
       @dragstart="handleDrag"
