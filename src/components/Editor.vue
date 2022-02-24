@@ -1,7 +1,7 @@
 <!--
  * @Author: saber
  * @Date: 2022-02-14 10:13:35
- * @LastEditTime: 2022-02-24 18:54:34
+ * @LastEditTime: 2022-02-24 19:21:55
  * @LastEditors: saber
  * @Description: 
 -->
@@ -14,7 +14,7 @@ import TopBar from './TopBar.vue';
 
 const CodeEditor = defineAsyncComponent({
   loader: async () => {
-    await new Promise((resolve) => setTimeout(resolve, 300000));
+    await new Promise((resolve) => setTimeout(resolve, 1000));
     return import('@/components/Editors/CodeEditor/index.vue');
   },
   loadingComponent: LoadingScreen,
@@ -30,9 +30,9 @@ const getEditorModel = computed(() => {
     return 'single';
   }
 });
-const activePrimaryFile = editorState.getActiveFiles[
-  EDITORS.primary
-] as FileType;
+// const activePrimaryFile = editorState.getActiveFiles[
+//   EDITORS.primary
+// ] as FileType;
 </script>
 <template>
   <div :class="['editor-area', getEditorModel]">
@@ -43,7 +43,7 @@ const activePrimaryFile = editorState.getActiveFiles[
     >
       <TopBar
         :openFiles="editorState.getOpenFiles[EDITORS.primary]"
-        :activeFile="activePrimaryFile"
+        :activeFile="editorState.getActiveFiles[EDITORS.primary]"
         :isActive="true"
       />
       <div class="scroll-wrapper">

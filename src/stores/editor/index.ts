@@ -1,7 +1,7 @@
 /*
  * @Author: saber
  * @Date: 2022-02-14 10:13:35
- * @LastEditTime: 2022-02-24 18:53:42
+ * @LastEditTime: 2022-02-24 19:21:02
  * @LastEditors: saber
  * @Description:
  */
@@ -32,7 +32,7 @@ export const useEditorStore = defineStore('editor', {
       [EDITORS.secondary]: [] as string[],
     },
     activeFiles: {
-      [EDITORS.primary]: '11',
+      [EDITORS.primary]: null,
       [EDITORS.secondary]: null,
     } as {
       [x: string]: string | null;
@@ -82,7 +82,6 @@ export const useEditorStore = defineStore('editor', {
         const children = filesState.getFiles.filter(
           (item: any) => item.parent === parentId
         );
-        console.log('children', children);
         return children;
       };
     },
@@ -94,10 +93,16 @@ export const useEditorStore = defineStore('editor', {
       // 如果没有包含
       if (!this.openFiles[editor].includes(id)) {
         this.openFiles[editor].push(id);
+        // 存储inexDb
       }
+      this.setActiveFile({ id, editor });
     },
     closeFile() {
       // 删除文件
+    },
+    async setActiveFile({ editor, id }: any) {
+      this.activeFiles[editor] = id;
+      // todo 设置编辑区
     },
     setDraggingId(id: string | null) {
       this.draggingId = id;

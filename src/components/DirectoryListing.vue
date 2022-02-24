@@ -1,7 +1,7 @@
 <!--
  * @Author: saber
  * @Date: 2022-02-15 10:18:58
- * @LastEditTime: 2022-02-24 17:35:37
+ * @LastEditTime: 2022-02-24 19:20:40
  * @LastEditors: saber
  * @Description: 
 -->
@@ -32,8 +32,6 @@ const filesdata = ref<any[]>(props.files || []);
 watch(
   () => props.files,
   () => {
-    console.log('>>>???');
-    console.log('filesdata', filesdata.value);
     filesdata.value = props.files;
   }
 );

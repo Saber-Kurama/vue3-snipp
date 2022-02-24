@@ -1,7 +1,7 @@
 <!--
  * @Author: saber
  * @Date: 2022-02-15 14:42:05
- * @LastEditTime: 2022-02-24 18:38:03
+ * @LastEditTime: 2022-02-24 19:20:50
  * @LastEditors: saber
  * @Description: 
 -->
@@ -28,6 +28,7 @@ const editorState = useEditorStore();
 const filesState = useFilesStore();
 const props = defineProps({
   file: Object as PropType<{ name: string; id: string; editable: boolean }>,
+  isActive: Boolean,
 });
 const filename = ref(props.file?.name);
 const readonly = ref(true);
@@ -41,11 +42,9 @@ const toggleContextMenu = () => {
   showContextMenu.value = !showContextMenu.value;
 };
 const changeFileName = () => {
-  console.log('changeFileName');
   if (filename.value) {
     if (props.file) {
       filesState.renameFile({ id: props.file.id, name: filename.value });
-      console.log('changeFileName', readonly.value);
       readonly.value = true;
       // this.openFile({ id: this.file.id });
     }
@@ -115,7 +114,7 @@ const handleDragEnd = () => {
 };
 </script>
 <template>
-  <div :class="['file-item']">
+  <div :class="['file-item', { active: props.isActive || showContextMenu }]">
     <div
       class="clickable-area"
       @click="editorState.openFile({ id: props.file?.id })"
@@ -135,6 +134,7 @@ const handleDragEnd = () => {
           @blur="changeFileName"
         />
       </form>
+      <div class="active-indicator" v-if="isActive"></div>
     </div>
     <div class="context-menu">
       <MoreOne
@@ -212,6 +212,13 @@ const handleDragEnd = () => {
     &:focus {
       border-bottom: 2px solid var(--color-primary);
     }
+  }
+
+  .active-indicator {
+    width: 5px;
+    height: 5px;
+    background: var(--color-primary);
+    border-radius: 50%;
   }
 
   .context-menu {

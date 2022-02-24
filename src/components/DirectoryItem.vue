@@ -1,7 +1,7 @@
 <!--
  * @Author: saber
  * @Date: 2022-02-15 14:40:54
- * @LastEditTime: 2022-02-24 18:05:04
+ * @LastEditTime: 2022-02-24 19:20:32
  * @LastEditors: saber
  * @Description: 
 -->
@@ -88,7 +88,6 @@ const createNewFile = () => {
 };
 const createNewFolder = () => {
   if (props.file) {
-    console.log('??>>>>>');
     filesState.createDirectory({ parent: props.file.id, editable: true });
     showContextMenu.value = false;
     showChildren.value = true;
