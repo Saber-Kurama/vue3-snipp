@@ -1,7 +1,7 @@
 <!--
  * @Author: saber
  * @Date: 2022-02-22 15:31:22
- * @LastEditTime: 2022-02-23 19:18:23
+ * @LastEditTime: 2022-02-24 11:42:14
  * @LastEditors: saber
  * @Description: 
 -->
@@ -113,7 +113,7 @@ const createNewFile = async () => {
             </form>
             <div class="file-types">
               <div
-                v-for="fileType in Object.values(fileTypes)"
+                v-for="fileType in (Object as any).values(fileTypes)"
                 :key="fileType.name"
                 :class="[
                   'item',

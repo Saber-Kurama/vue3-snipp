@@ -1,7 +1,7 @@
 <!--
  * @Author: saber
  * @Date: 2022-02-15 09:56:34
- * @LastEditTime: 2022-02-23 19:15:56
+ * @LastEditTime: 2022-02-24 11:30:45
  * @LastEditors: saber
  * @Description: 
 -->
@@ -40,16 +40,11 @@ const createNewFolder = () => {
           />
         </div>
         <div v-tooltip="'Create new folder (Ctrl+Alt+N)'" class="icon-wrapper">
-          <FolderPlus
-            size="18"
-            class="icon"
-            @click="createNewFolder"
-          />
+          <FolderPlus size="18" class="icon" @click="createNewFolder" />
         </div>
       </div>
     </header>
     <SimpleBar1 class="content-area">
-      {{children.length}}
       <DirectoryListing
         v-if="children && children.length > 0"
         :files="children"

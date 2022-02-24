@@ -1,7 +1,7 @@
 <!--
  * @Author: saber
  * @Date: 2022-02-15 10:18:58
- * @LastEditTime: 2022-02-23 19:14:06
+ * @LastEditTime: 2022-02-24 11:38:27
  * @LastEditors: saber
  * @Description: 
 -->
@@ -15,8 +15,6 @@ import DirectoryItem from './DirectoryItem.vue';
 import { fileTypes } from '@/models/vFile.model';
 import { ref, watch } from 'vue';
 
-const searchInput = ref('');
-const filesdata = ref<any[]>(props.files || []);
 // setTimeout(() => {
 //   searchInput.value = '';
 //   filesdata.value.push(...props.files);
@@ -27,7 +25,8 @@ const props = defineProps({
     default: () => [],
   },
 });
-
+const searchInput = ref('');
+const filesdata = ref<any[]>(props.files || []);
 watch(
   () => props.files,
   () => {
@@ -44,10 +43,7 @@ const components = {
 </script>
 <template>
   <div class="directory-listing">
-    <FadeTransition
-      tag="div"
-      group 
-    >
+    <FadeTransition tag="div" group>
       <component
         v-for="file in filesdata"
         :key="file.id"

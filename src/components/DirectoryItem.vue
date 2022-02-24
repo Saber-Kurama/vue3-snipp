@@ -1,7 +1,7 @@
 <!--
  * @Author: saber
  * @Date: 2022-02-15 14:40:54
- * @LastEditTime: 2022-02-21 14:26:01
+ * @LastEditTime: 2022-02-24 11:39:39
  * @LastEditors: saber
  * @Description: 
 -->
@@ -23,19 +23,19 @@ const refInput = ref();
 const editorState = useEditorStore();
 const filesState = useFilesStore();
 const props = defineProps({
-  file: Object as PropType<{ name: string; id: string }>,
+  file: Object as PropType<{ name: string; id: string; editable: boolean }>,
 });
 const filename = ref(props.file?.name || '');
 const readonly = ref(true);
 const showChildren = ref(false);
 const showContextMenu = ref(false);
 onMounted(() => {
-  readonly.value = !props.file.editable;
+  readonly.value = !props.file?.editable;
   filename.value = props.file?.name || '';
-  if (props.file.editable) {
-      // this.$refs.input.focus();
-      refInput.value.focus();
-    }
+  if (props.file?.editable) {
+    // this.$refs.input.focus();
+    refInput.value.focus();
+  }
 });
 
 const toggleShowChildren = () => {
@@ -43,7 +43,7 @@ const toggleShowChildren = () => {
 };
 
 const changeFileName = () => {
-  if (filename.value) {
+  if (filename.value && props.file?.id) {
     filesState.renameFile({ id: props.file.id, name: filename.value });
     // 重命名
     readonly.value = true;
@@ -62,7 +62,7 @@ const changeFileName = () => {
       >
         <FolderOpen v-if="showChildren" class="icon" size="20px"></FolderOpen>
         <FolderClose v-else class="icon" size="20px"></FolderClose>
-        <form>
+        <form @submit.prevent="refInput.blur()">
           <input
             ref="refInput"
             type="text"
