@@ -1,13 +1,14 @@
 /*
  * @Author: saber
  * @Date: 2022-02-15 14:20:08
- * @LastEditTime: 2022-02-23 19:16:20
+ * @LastEditTime: 2022-02-24 14:57:15
  * @LastEditors: saber
  * @Description:
  */
 
 import { defineStore } from 'pinia';
 import sortBy from 'lodash/sortBy';
+import omit from 'lodash/omit';
 import VFile, { fileTypes } from '@/models/vFile.model';
 
 interface FilesI {
@@ -110,7 +111,7 @@ export const useFilesStore = defineStore('files', {
     },
   },
   actions: {
-    setFiles(files: {[x: string]: VFile}) {
+    setFiles(files: { [x: string]: VFile }) {
       // // 这个逻辑的抽象
       this.files = files;
       this.filesById = Object.keys(files);
@@ -142,8 +143,8 @@ export const useFilesStore = defineStore('files', {
         [directory.id]: directory,
       };
       this.setFiles(files);
-       // todo: 保存到 indexDB
-       return directory; 
+      // todo: 保存到 indexDB
+      return directory;
     },
     // todo: any
     async renameFile({ id, name }: any) {
@@ -155,9 +156,15 @@ export const useFilesStore = defineStore('files', {
           name,
           editable: false,
         },
-      }
+      };
       this.setFiles(files);
       // todo: 保存到 indexDB
-    }, 
+    },
+    // todo: any
+    async deleteDirectory({ id }: any) {
+      if (!id) return;
+      const files = omit(this.files, id);
+      this.setFiles(files);
+    },
   },
 });

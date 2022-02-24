@@ -1,22 +1,42 @@
 <!--
  * @Author: saber
  * @Date: 2022-02-15 14:40:54
- * @LastEditTime: 2022-02-24 11:39:39
+ * @LastEditTime: 2022-02-24 15:04:45
  * @LastEditors: saber
  * @Description: 
 -->
 <script setup lang="ts">
-import { FolderClose, FolderOpen, MoreOne } from '@icon-park/vue-next';
-import { onMounted, ref, type PropType } from 'vue';
+import {
+  FolderClose,
+  FolderOpen,
+  FileAddition,
+  FolderPlus,
+  MoreOne,
+  Edit,
+  Download,
+  Delete,
+} from '@icon-park/vue-next';
+import {
+  computed,
+  getCurrentInstance,
+  onMounted,
+  ref,
+  type PropType,
+} from 'vue';
 import { useEditorStore } from '@/stores/editor';
 import { useFilesStore } from '@/stores/files';
+// @ts-ignore
+import {
+  SlideYUpTransition,
+  // @ts-ignore
+} from '@dangojs/vue3-transitions';
 import FileItem from './FileItem.vue';
 // import DirectoryItem from './DirectoryItem.vue';
 import { fileTypes } from '@/models/vFile.model';
 
 const components = {
   [fileTypes.FILE]: FileItem,
-  [fileTypes.DIRECTORY]: this,
+  [fileTypes.DIRECTORY]: getCurrentInstance()?.type,
 };
 
 const refInput = ref();
@@ -27,8 +47,10 @@ const props = defineProps({
 });
 const filename = ref(props.file?.name || '');
 const readonly = ref(true);
-const showChildren = ref(false);
+const showChildren = ref(true);
 const showContextMenu = ref(false);
+
+const childrenFiles = computed(() => editorState.getChildren(props.file?.id));
 onMounted(() => {
   readonly.value = !props.file?.editable;
   filename.value = props.file?.name || '';
@@ -42,6 +64,10 @@ const toggleShowChildren = () => {
   showChildren.value = !showChildren.value;
 };
 
+const toggleContextMenu = () => {
+  showContextMenu.value = !showContextMenu.value;
+};
+
 const changeFileName = () => {
   if (filename.value && props.file?.id) {
     filesState.renameFile({ id: props.file.id, name: filename.value });
@@ -49,6 +75,36 @@ const changeFileName = () => {
     readonly.value = true;
   } else {
     // 删除目录
+  }
+};
+
+const createNewFile = () => {
+  if (props.file) {
+    showChildren.value = true;
+    filesState.createFile({ parent: props.file.id, editable: true });
+    showContextMenu.value = false;
+  }
+};
+const createNewFolder = () => {
+  if (props.file) {
+    console.log('??>>>>>');
+    filesState.createDirectory({ parent: props.file.id, editable: true });
+    showContextMenu.value = false;
+    showChildren.value = true;
+  }
+};
+const openRenameMode = () => {
+  showContextMenu.value = false;
+  readonly.value = false;
+  refInput.value.focus();
+};
+const saveFolderAs = () => {
+  console.log('--');
+};
+const deleteCurrentFolder = () => {
+  showContextMenu.value = false;
+  if (props.file) {
+    filesState.deleteDirectory({ id: props.file.id });
   }
 };
 </script>
@@ -78,12 +134,33 @@ const changeFileName = () => {
           class="trigger-icon no-margin"
           :style="showContextMenu ? 'visibility: visible' : null"
           size="18px"
+          @click="toggleContextMenu"
         />
+        <SlideYUpTransition>
+          <div v-if="showContextMenu" class="options">
+            <div class="option-item" @click="createNewFile">
+              <FileAddition size="18" class="icon" />Create File
+            </div>
+            <div class="option-item" @click="createNewFolder">
+              <FolderPlus size="18" class="icon" />Create Folder
+            </div>
+            <div class="option-item" @click="openRenameMode">
+              <Edit size="18" class="icon" />Rename
+            </div>
+            <div class="option-item" @click="saveFolderAs">
+              <Download size="18" class="icon" />Download
+            </div>
+            <div class="option-item" @click="deleteCurrentFolder">
+              <Delete size="18" class="icon" />Delete Folder
+            </div>
+          </div>
+        </SlideYUpTransition>
       </div>
     </div>
+    <!-- {{ childrenFiles }} -->
     <div v-if="showChildren" class="files">
       <component
-        v-for="child in editorState.getChildren(file?.id)"
+        v-for="child in childrenFiles"
         :key="child.id"
         :is="components[child.type]"
         :file="child"
@@ -174,12 +251,50 @@ const changeFileName = () => {
         transform: scale(0.95);
       }
     }
+
+    .options {
+      position: absolute;
+      right: 0;
+      top: 35px;
+      width: 170px;
+      height: auto;
+      z-index: 99;
+      display: flex;
+      flex-direction: column;
+      border-radius: 5px;
+      background: var(--color-secondary);
+      box-shadow: var(--smooth-shadow);
+      border: 1px solid var(--border-color);
+      padding: 5px;
+
+      .option-item {
+        display: flex;
+        align-items: center;
+        padding: 10px;
+        border-radius: 3px;
+
+        &:hover {
+          cursor: pointer;
+          // background: var(--color-secondary-light);
+          color: var(--color-primary);
+          .icon {
+            color: var(--color-primary);
+          }
+        }
+      }
+    }
   }
 
   &:hover {
     background: var(--color-secondary);
     cursor: pointer;
     color: var(--font-color);
+    .context-menu {
+      display: flex;
+      .trigger-icon {
+        visibility: visible;
+      }
+    }
   }
 }
 </style>
