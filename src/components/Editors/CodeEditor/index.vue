@@ -1,18 +1,51 @@
 <!--
  * @Author: saber
  * @Date: 2022-02-14 11:36:35
- * @LastEditTime: 2022-03-09 15:19:06
+ * @LastEditTime: 2022-03-09 18:49:43
  * @LastEditors: saber
  * @Description: 
 -->
 <script setup lang="ts">
 // @ts-ignore
 import MonacoEditor from '@dangojs/vue3-monaco';
-import { ref } from 'vue';
+import { computed, ref, watch } from 'vue';
 
-const code = ref('');
+const props = defineProps<{
+  file: any;
+}>();
+console.log('props.file?', props.file);
+const code = ref(props.file?.contents || '');
+const getLanguage = computed(() => {
+  const languageExts: any = {
+    js: 'javascript',
+    jsx: 'javascript',
+    ts: 'typescript',
+    py: 'python',
+    json: 'json',
+    html: 'html',
+    css: 'css',
+    md: 'markdown',
+    csv: 'csv',
+    sql: 'sql',
+  };
+  if (props.file?.name) {
+    const nameParts = props.file.name.split('.');
+    const ext = nameParts[nameParts.length - 1];
+    return languageExts[ext] || 'markdown'; // fallback to default syntax highlightning to be markdown
+  } else {
+    return 'sql';
+  }
+});
+watch(
+  () => props.file,
+  (newVal) => {
+    console.log(props.file, newVal);
+    code.value = newVal?.contents || '';
+    console.log('code', code.value)
+  }
+);
 </script>
 <template>
-  <MonacoEditor v-model="code" theme="vs-dark" />
+  <MonacoEditor v-model="code" theme="vs-dark" :language="getLanguage" />
 </template>
 <style lang="scss" scoped></style>

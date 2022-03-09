@@ -1,7 +1,7 @@
 /*
  * @Author: saber
  * @Date: 2022-02-15 14:20:08
- * @LastEditTime: 2022-02-24 18:01:59
+ * @LastEditTime: 2022-03-09 18:44:19
  * @LastEditors: saber
  * @Description:
  */
@@ -75,7 +75,7 @@ const defaultState = {
       id: 'file_f49dfcd4-05ad-4c39-8da3-ff9ba364d433',
       parent: 'root',
       name: 'a.sql',
-      contents: '',
+      contents: 'select * from tablename',
       created_at: 1644397720935,
       type: 'file',
       editable: false,

@@ -1,7 +1,7 @@
 <!--
  * @Author: saber
  * @Date: 2022-02-14 10:13:35
- * @LastEditTime: 2022-02-24 19:21:55
+ * @LastEditTime: 2022-03-09 18:43:19
  * @LastEditors: saber
  * @Description: 
 -->
@@ -48,7 +48,7 @@ const getEditorModel = computed(() => {
       />
       <div class="scroll-wrapper">
         <!-- <component></component> -->
-        <CodeEditor />
+        <CodeEditor :file="editorState.getActiveFiles[EDITORS.primary]" />
       </div>
     </div>
   </div>

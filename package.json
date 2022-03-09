@@ -1,5 +1,5 @@
 {
-  "name": "vue3-demo1",
+  "name": "vue3-snipp",
   "version": "0.0.0",
   "scripts": {
     "dev": "cross-env DEBUG=unplugin-icons:* vite",
