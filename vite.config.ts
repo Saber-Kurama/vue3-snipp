@@ -1,7 +1,7 @@
 /*
  * @Author: saber
  * @Date: 2022-02-10 15:41:57
- * @LastEditTime: 2022-02-15 15:48:25
+ * @LastEditTime: 2022-03-09 14:46:36
  * @LastEditors: saber
  * @Description:
  */
@@ -15,6 +15,7 @@ import Icons from 'unplugin-icons/vite';
 import { FileSystemIconLoader } from 'unplugin-icons/loaders';
 import IconsResolver from 'unplugin-icons/resolver';
 import Components from 'unplugin-vue-components/vite';
+import monacoEditorPlugin from 'vite-plugin-monaco-editor';
 
 // https://vitejs.dev/config/
 export default defineConfig({
@@ -38,6 +39,7 @@ export default defineConfig({
         }),
       ],
     }),
+    monacoEditorPlugin({}),
   ],
   resolve: {
     alias: {
