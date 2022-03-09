@@ -1,7 +1,7 @@
 /*
  * @Author: saber
  * @Date: 2022-02-15 14:20:08
- * @LastEditTime: 2022-03-09 18:44:19
+ * @LastEditTime: 2022-03-09 22:12:09
  * @LastEditors: saber
  * @Description:
  */
@@ -47,7 +47,7 @@ const defaultState = {
     'file_0d65484c-0809-4853-9810-7d83ffe4477a': {
       id: 'file_0d65484c-0809-4853-9810-7d83ffe4477a',
       parent: 'directory_6b467c39-3528-4c2d-93b6-8529c1187bc2',
-      name: '1.js',
+      name: '1.sh',
       contents: '',
       created_at: 1644397729035,
       type: 'file',

@@ -1,7 +1,7 @@
 <!--
  * @Author: saber
  * @Date: 2022-02-14 11:36:35
- * @LastEditTime: 2022-03-09 18:49:43
+ * @LastEditTime: 2022-03-09 22:11:32
  * @LastEditors: saber
  * @Description: 
 -->
@@ -27,13 +27,14 @@ const getLanguage = computed(() => {
     md: 'markdown',
     csv: 'csv',
     sql: 'sql',
+    sh: 'shell',
   };
   if (props.file?.name) {
     const nameParts = props.file.name.split('.');
     const ext = nameParts[nameParts.length - 1];
     return languageExts[ext] || 'markdown'; // fallback to default syntax highlightning to be markdown
   } else {
-    return 'sql';
+    return 'markdown';
   }
 });
 watch(
