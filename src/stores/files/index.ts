@@ -65,7 +65,7 @@ const defaultState = {
     'file_e35c93b8-572c-4199-91e4-bc0c5e44cbeb': {
       id: 'file_e35c93b8-572c-4199-91e4-bc0c5e44cbeb',
       parent: 'root',
-      name: '2.jar',
+      name: '2.graphql',
       contents: '奥术大师多',
       created_at: 1644397737776,
       type: 'file',

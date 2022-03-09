@@ -6,10 +6,12 @@
  * @Description: 
 -->
 <script setup lang="ts">
+// import * as monaco from "monaco-editor";
 // @ts-ignore
 import MonacoEditor from '@dangojs/vue3-monaco';
+// import 'monaco-graphql/src/monaco.contribution.ts';
 import { computed, ref, watch } from 'vue';
-
+// console.log('monaco', monaco);
 const props = defineProps<{
   file: any;
 }>();
@@ -28,6 +30,7 @@ const getLanguage = computed(() => {
     csv: 'csv',
     sql: 'sql',
     sh: 'shell',
+    graphql: 'graphql'
   };
   if (props.file?.name) {
     const nameParts = props.file.name.split('.');

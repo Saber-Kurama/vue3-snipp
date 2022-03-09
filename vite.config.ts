@@ -16,6 +16,7 @@ import { FileSystemIconLoader } from 'unplugin-icons/loaders';
 import IconsResolver from 'unplugin-icons/resolver';
 import Components from 'unplugin-vue-components/vite';
 import monacoEditorPlugin from 'vite-plugin-monaco-editor';
+import path from 'path';
 
 // https://vitejs.dev/config/
 export default defineConfig({
@@ -39,7 +40,12 @@ export default defineConfig({
         }),
       ],
     }),
-    monacoEditorPlugin({}),
+    monacoEditorPlugin({
+      customWorkers: [
+        // {label: "sql", entry: path.resolve('src/languages/dtsql/dtsql.worker.ts')}
+        {label: "graphql", entry: "monaco-graphql/esm/graphql.worker"}
+      ]
+    }),
   ],
   resolve: {
     alias: {
