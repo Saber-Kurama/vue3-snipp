@@ -1,7 +1,7 @@
 /*
  * @Author: saber
  * @Date: 2022-02-10 15:41:57
- * @LastEditTime: 2022-03-09 14:46:36
+ * @LastEditTime: 2022-03-10 19:10:11
  * @LastEditors: saber
  * @Description:
  */
@@ -42,9 +42,9 @@ export default defineConfig({
     }),
     monacoEditorPlugin({
       customWorkers: [
-        // {label: "sql", entry: path.resolve('src/languages/dtsql/dtsql.worker.ts')}
-        {label: "graphql", entry: "monaco-graphql/esm/graphql.worker"}
-      ]
+        // {label: "sql", entry: path.resolve('src/languages/dtsql/dtsql.worker.ts')},
+        // {label: "graphql", entry: "monaco-graphql/esm/graphql.worker"}
+      ],
     }),
   ],
   resolve: {
