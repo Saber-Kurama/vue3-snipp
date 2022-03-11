@@ -1,12 +1,12 @@
 <!--
  * @Author: saber
  * @Date: 2022-02-14 11:36:35
- * @LastEditTime: 2022-03-09 22:11:32
+ * @LastEditTime: 2022-03-11 11:46:10
  * @LastEditors: saber
  * @Description: 
 -->
 <script setup lang="ts">
-// import * as monaco from "monaco-editor";
+import type * as monaco from 'monaco-editor';
 // @ts-ignore
 import MonacoEditor from '@dangojs/vue3-monaco';
 // import 'monaco-graphql/src/monaco.contribution.ts';
@@ -15,8 +15,17 @@ import { computed, ref, watch } from 'vue';
 const props = defineProps<{
   file: any;
 }>();
-console.log('props.file?', props.file);
+const editorOptions = {
+  automaticLayout: true,
+  selectOnLineNumbers: true,
+  fontSize: 16,
+  fontLigatures: true,
+  minimap: {
+    enabled: false,
+  },
+};
 const code = ref(props.file?.contents || '');
+const editRef = ref();
 const getLanguage = computed(() => {
   const languageExts: any = {
     js: 'javascript',
@@ -30,7 +39,7 @@ const getLanguage = computed(() => {
     csv: 'csv',
     sql: 'sql',
     sh: 'shell',
-    graphql: 'graphql'
+    graphql: 'graphql',
   };
   if (props.file?.name) {
     const nameParts = props.file.name.split('.');
@@ -40,16 +49,39 @@ const getLanguage = computed(() => {
     return 'markdown';
   }
 });
+const editorDidMount = (editor: monaco.editor.IStandaloneCodeEditor) => {
+  editor.focus();
+  editor
+};
 watch(
   () => props.file,
   (newVal) => {
     console.log(props.file, newVal);
     code.value = newVal?.contents || '';
-    console.log('code', code.value)
+    console.log('code', code.value);
   }
 );
+// setTimeout(() => {
+//   console.log('editRef', editRef.value.getEditor());
+// }, 3000);
 </script>
 <template>
-  <MonacoEditor v-model="code" theme="vs-dark" :language="getLanguage" />
+  <MonacoEditor
+    ref="editRef"
+    v-model="code"
+    theme="Dracula"
+    :language="getLanguage"
+    :options="editorOptions"
+    @editorDidMount="editorDidMount"
+    class="monaco-editor"
+  />
 </template>
-<style lang="scss" scoped></style>
+<style lang="scss">
+.monaco-editor {
+  flex: 1;
+  width: 100%;
+  * {
+    font-family: 'Fira Code', monospace;
+  }
+}
+</style>
